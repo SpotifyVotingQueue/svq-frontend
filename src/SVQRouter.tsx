@@ -17,7 +17,7 @@ export default function SVQRouter() {
     ]);
 
     return <>
-        <Paper sx={{minWidth: '100vw', minHeight: '100vh', backgroundColor: theme.baseColors.primary, borderRadius: '0px'}}>
+        <Paper sx={{minWidth: '100vw', minHeight: '100vh', backgroundColor: theme.baseColors.primary, borderRadius: '0px', display: 'flex'}}>
             <div>
                 {/* nav could go here */}
             </div>
