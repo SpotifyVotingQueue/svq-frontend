@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import SVQRouter from './SVQRouter';
 import Providers from './Providers';
 

@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
+    "@heroicons/react": "^2.0.11",
     "@mui/icons-material": "^5.10.3",
     "@mui/material": "^5.10.5",
     "@testing-library/jest-dom": "^5.16.5",
@@ -47,6 +48,9 @@
     ]
   },
   "devDependencies": {
-    "env-cmd": "^10.1.0"
+    "autoprefixer": "^10.4.12",
+    "env-cmd": "^10.1.0",
+    "postcss": "^8.4.16",
+    "tailwindcss": "^3.1.8"
   }
 }

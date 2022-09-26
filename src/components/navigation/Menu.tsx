@@ -1,8 +1,5 @@
-import { Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, Paper, SwipeableDrawer } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
-import MenuIcon from '@mui/icons-material/Menu';
 import React, { useEffect, useState, useContext } from 'react';
-import { Outlet, useLocation, useMatch, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { DeviceContext } from '../../Providers';
 
 interface MenuItem {
@@ -11,7 +8,6 @@ interface MenuItem {
 }
 
 export default function Menu() {
-    const theme = useTheme();
     let navigate = useNavigate();
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -72,58 +68,13 @@ export default function Menu() {
     }
 
     return <>
-        <Paper sx={{minWidth: '100vw', minHeight: '100vh', backgroundColor: theme.baseColors.primary, borderRadius: '0px', display: 'block'}}>
+        <div style={{minWidth: '100vw', minHeight: '100vh', borderRadius: '0px', display: 'block'}} className="bg-backgroundLight text-primary">
             <div style={{minWidth: '100vw', height: '5vh', display: 'flex'}}>
-                <IconButton 
-                    size='large'
-                    color='secondary'
-                    aria-label='Menu'
-                    sx={{ marginLeft: 'auto', marginRight: '10px', marginTop: '10px' }}
-                    onClick={() => setIsMenuOpen(true)}
-                >
-                    <MenuIcon />
-                </IconButton>
-                <SwipeableDrawer
-                    anchor='right'
-                    open={isMenuOpen}
-                    onClose={() => setIsMenuOpen(false)}
-                    onOpen={() => setIsMenuOpen(true)}
-                    PaperProps={{
-                        sx: {
-                            bgcolor: theme.baseColors.secondary,
-                            color: 'white',
-                            opacity: 0.9
-                        }
-                    }}  
-                    disableDiscovery={device.isIOS}
-                >
-                    <Box
-                        sx={{ width: '40vw' }}
-                        role='presentation'
-                        onClick={() => setIsMenuOpen(false)}
-                        onKeyDown={() => setIsMenuOpen(false)}
-                    >
-                        <List>
-                            {menuList.map((item, index) => (
-                                <>
-                                    {index !== 0 && 
-                                        <Divider />}
-                                    <ListItem key={index} disablePadding>
-                                        <ListItemButton onClick={(event) => navigateMenu(item)}>
-                                            <ListItemText sx={{textAlign: 'center'}}>
-                                                {item.name}
-                                            </ListItemText>
-                                        </ListItemButton>
-                                    </ListItem>
-                                </>
-                            ))}
-                        </List>
-                    </Box>
-                </SwipeableDrawer>
+                
             </div>
             <div style={{minWidth: '100vw', height: '95vh', display: 'flex'}}>
                 <Outlet />
             </div>
-        </Paper>
+        </div>
     </>;
 }
