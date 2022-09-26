@@ -2,7 +2,7 @@ import { Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText,
 import { useTheme } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
 import React, { useEffect, useState, useContext } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useMatch, useNavigate } from 'react-router-dom';
 import { DeviceContext } from '../../Providers';
 
 interface MenuItem {
@@ -33,12 +33,15 @@ export default function Menu() {
 
     const device = useContext(DeviceContext);
 
+    const { pathname } = useLocation();
     useEffect(() => {
-        navigate('/home');
+        if (pathname === '/') {
+            navigate('/home');
+        }
     }, []);
 
     useEffect(() => {
-        const setLogoutOption = async () => {
+        const setMenuOptions = async () => {
             //TODO: implement user provider
             if (false /*user.isLoggedIn*/) {
                 setMenuList([
@@ -49,9 +52,19 @@ export default function Menu() {
                     }
                 ]);
             }
+
+            if (process.env.REACT_APP_IS_DEBUG) {
+                setMenuList([
+                    ...menuList,
+                    {
+                        name: 'Debug Device',
+                        path: '/debug/device'
+                    }
+                ]);
+            }
         };
-        setLogoutOption();
-    }, [isMenuOpen])
+        setMenuOptions();
+    }, [])
     
     function navigateMenu(item: MenuItem): void {
         navigate(item.path);

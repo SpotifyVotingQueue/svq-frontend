@@ -1,9 +1,10 @@
 import { Paper, useTheme } from '@mui/material';
 import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 import Home from './components/home/Home';
 import Menu from './components/navigation/Menu';
 import ErrorPage from './ErrorPage';
+import DeviceDebug from './util/debug/DeviceDebug';
 
 export default function SVQRouter() {
 
@@ -18,6 +19,16 @@ export default function SVQRouter() {
                 {
                     path: 'home',
                     element: <Home />
+                },
+                {
+                    path: 'debug',
+                    element: <Outlet />,
+                    children: [
+                        {
+                            path: 'device',
+                            element: <DeviceDebug />
+                        }
+                    ]
                 }
             ]
         }
