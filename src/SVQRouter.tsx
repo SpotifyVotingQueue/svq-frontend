@@ -2,6 +2,7 @@ import { Paper, useTheme } from '@mui/material';
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './components/home/Home';
+import Menu from './components/navigation/Menu';
 import ErrorPage from './ErrorPage';
 
 export default function SVQRouter() {
@@ -11,17 +12,18 @@ export default function SVQRouter() {
     const router = createBrowserRouter([
         {
             path: "/",
-            element: <Home />,
-            errorElement: <ErrorPage message="Das angeforderte Element konnte unter dieser URL nicht gefunden werden" title="Element nicht gefunden!" />
+            element: <Menu />,
+            errorElement: <ErrorPage message="Das angeforderte Element konnte unter dieser URL nicht gefunden werden" title="Element nicht gefunden!" />,
+            children: [
+                {
+                    path: 'home',
+                    element: <Home />
+                }
+            ]
         }
     ]);
 
     return <>
-        <Paper sx={{minWidth: '100vw', minHeight: '100vh', backgroundColor: theme.baseColors.primary, borderRadius: '0px', display: 'flex'}}>
-            <div>
-                {/* nav could go here */}
-            </div>
-            <RouterProvider router={router} />
-        </Paper>
+        <RouterProvider router={router} />
     </>;
 }
