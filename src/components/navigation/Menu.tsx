@@ -1,8 +1,9 @@
 import { Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, Paper, SwipeableDrawer } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
+import { DeviceContext } from '../../Providers';
 
 interface MenuItem {
     name: string;
@@ -30,7 +31,7 @@ export default function Menu() {
         }
     ]);  
 
-    const isIOS: boolean = false; //TODO implement provider
+    const device = useContext(DeviceContext);
 
     useEffect(() => {
         navigate('/home');
@@ -81,7 +82,7 @@ export default function Menu() {
                             opacity: 0.9
                         }
                     }}  
-                    disableDiscovery={isIOS}
+                    disableDiscovery={device.isIOS}
                 >
                     <Box
                         sx={{ width: '40vw' }}
