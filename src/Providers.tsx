@@ -1,4 +1,5 @@
 import { createTheme, Theme } from '@mui/material';
+import { PaletteColor } from '@mui/material/styles';
 import { ThemeProvider } from '@mui/material/styles';
 import React from 'react';
 
@@ -18,6 +19,11 @@ declare module '@mui/material/styles' {
         }
         button?: string;
     }
+
+    interface Palette {
+        primary: PaletteColor;
+        secondary: PaletteColor;
+    }
 }
 
 interface ProviderProps {
@@ -30,6 +36,14 @@ export default function Providers(props: ProviderProps) {
         baseColors: {
             primary: '#C3073F',
             secondary: '#1A1A1D'
+        },
+        palette: {
+            primary: {
+                main: '#C3073F'
+            },
+            secondary: {
+                main: '#1A1A1D'
+            }
         }
     })
 
