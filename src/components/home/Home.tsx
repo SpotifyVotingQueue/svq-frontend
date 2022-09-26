@@ -1,10 +1,11 @@
 import React from 'react';
+import logo from '../../assets/media/logo.svg'
 
 export default function Home() {
     return <>
         <div style={{height: '40vh', margin: 'auto'}}>
             <div style={{display: 'flex'}}>
-                <h1 style={{color: 'black', margin: 'auto'}}>Spotify Queue</h1>
+                <img src={logo} alt="HipQueue" style={{height: '5vh', margin: 'auto'}} />
             </div>
             <div>
                 <button style={{ display: 'block', marginTop: '60px', marginLeft: 'auto', marginRight: 'auto' }}>

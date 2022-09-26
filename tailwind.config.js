@@ -12,7 +12,7 @@ module.exports = {
 			primary: "#FFFFFF",
 			primaryDark: "#7B8499",
 			secondary: "#404C6C",
-			backgroundLight: "#393442",
+			backgroundLight: "#252526",
 			backgroundDark: "#0F0F1D",
 			logo: "#3E68FF",
 			spotify: "#1DB954",
