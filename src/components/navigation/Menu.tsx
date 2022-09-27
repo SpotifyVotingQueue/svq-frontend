@@ -1,6 +1,8 @@
-import React, { useEffect, useState, useContext } from 'react';
+import { Popover, Transition } from '@headlessui/react';
+import React, { useEffect, useState, useContext, Fragment } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { DeviceContext } from '../../Providers';
+import { MenuButton } from '../../util/widgets/Buttons';
 import './Menu.css';
 
 interface MenuItem {
@@ -11,7 +13,7 @@ interface MenuItem {
 export default function Menu() {
     let navigate = useNavigate();
 
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    // const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const [menuList, setMenuList] = useState<MenuItem[]>([
         {
@@ -27,8 +29,6 @@ export default function Menu() {
             path: '/impressum'
         }
     ]);  
-
-    const device = useContext(DeviceContext);
 
     const { pathname } = useLocation();
     useEffect(() => {
@@ -65,22 +65,41 @@ export default function Menu() {
     
     function navigateMenu(item: MenuItem): void {
         navigate(item.path);
-        setIsMenuOpen(false);
     }
 
     return <>
         <div style={{minWidth: '100vw', minHeight: '100vh', borderRadius: '0px', display: 'block'}} className="backgroundGradient text-primary">
             <div style={{minWidth: '100vw', height: '10vh', display: 'flex'}} className="bg-backgroundDark">
-                <button style={{ height: '5vh', width: '5vh', margin: 'auto', marginLeft: '2.5vh', display: 'flex' }}
-                    className="text-primary fill-primary"
-                    onClick={() => setIsMenuOpen(!isMenuOpen)}>
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                        style={{ height: '5vh', width: '5vh', margin: 'auto' }}
-                        width="24" height="24"
-                        viewBox="0 0 24 24">
-                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
-                    </svg>
-                </button>
+                <Popover className="relative">
+                    <Popover.Button style={{marginTop: '5vw'}}>
+                        {MenuButton()}
+                    </Popover.Button>
+                    <Transition
+                        as={Fragment}
+                        enter="transition ease-out duration-200"
+                        enterFrom="opacity-0 translate-y-1"
+                        enterTo="opacity-100 translate-y-0"
+                        leave="transition ease-in duration-150"
+                        leaveFrom="opacity-100 translate-y-0"
+                        leaveTo="opacity-0 translate-y-1"
+                    >
+                        <Popover.Panel className="absolute z-10 top-0">
+                            <div className='overflow-hidden shadow-lg ring-1 ring-primaryDark ring-opacity-5' style={{minWidth: '50vw', minHeight: '100vh'}}>
+                                <div className='relative bg-backgroundDark text-primary opacity-80 flex' style={{ minWidth: '50vw', minHeight: '100vh' }}>
+                                    <div className='mt-auto mb-auto flex flex-col justify-evenly min-h-screen-50'>
+                                        {menuList.map((item, index) => 
+                                            <div key={index} className='text-center' style={{minWidth: '50vw', minHeight: '10vh'}}>
+                                                <button className='text-primary fill-primary' style={{minWidth: '50vw', minHeight: '10vh'}} onClick={() => navigateMenu(item)}>
+                                                    {item.name}
+                                                </button>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        </Popover.Panel>
+                    </Transition>
+                </Popover>
                 <button style={{ height: '5vh', width: '5vh', margin: 'auto', marginRight: '2.5vh', display: 'flex' }}
                     className="text-primary fill-primaryDark bg-primaryDark rounded-full">
                     <svg xmlns="http://www.w3.org/2000/svg"

@@ -29,6 +29,13 @@ module.exports = {
 			borderRadius: {
 				"4xl": "2rem",
 			},
+			height: {
+				"screen-50": "50vh",
+			},
+			minHeight: {
+				"screen-50": "50vh",
+				"screen-80": "80vh",
+			},
 		},
 	},
 	plugins: [],
