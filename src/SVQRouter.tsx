@@ -1,4 +1,3 @@
-import { Paper, useTheme } from '@mui/material';
 import React from 'react';
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 import Home from './components/home/Home';
@@ -7,8 +6,6 @@ import ErrorPage from './ErrorPage';
 import DeviceDebug from './util/debug/DeviceDebug';
 
 export default function SVQRouter() {
-
-    const theme = useTheme();
 
     const router = createBrowserRouter([
         {

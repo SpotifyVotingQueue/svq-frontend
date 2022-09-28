@@ -1,9 +1,9 @@
-import { Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, Paper, SwipeableDrawer } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
-import MenuIcon from '@mui/icons-material/Menu';
-import React, { useEffect, useState, useContext } from 'react';
-import { Outlet, useLocation, useMatch, useNavigate } from 'react-router-dom';
+import { Popover, Transition } from '@headlessui/react';
+import React, { useEffect, useState, useContext, Fragment } from 'react';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { DeviceContext } from '../../Providers';
+import { MenuButton } from '../../util/widgets/Buttons';
+import './Menu.css';
 
 interface MenuItem {
     name: string;
@@ -11,10 +11,9 @@ interface MenuItem {
 }
 
 export default function Menu() {
-    const theme = useTheme();
     let navigate = useNavigate();
 
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    // const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const [menuList, setMenuList] = useState<MenuItem[]>([
         {
@@ -30,8 +29,6 @@ export default function Menu() {
             path: '/impressum'
         }
     ]);  
-
-    const device = useContext(DeviceContext);
 
     const { pathname } = useLocation();
     useEffect(() => {
@@ -68,62 +65,53 @@ export default function Menu() {
     
     function navigateMenu(item: MenuItem): void {
         navigate(item.path);
-        setIsMenuOpen(false);
     }
 
     return <>
-        <Paper sx={{minWidth: '100vw', minHeight: '100vh', backgroundColor: theme.baseColors.primary, borderRadius: '0px', display: 'block'}}>
-            <div style={{minWidth: '100vw', height: '5vh', display: 'flex'}}>
-                <IconButton 
-                    size='large'
-                    color='secondary'
-                    aria-label='Menu'
-                    sx={{ marginLeft: 'auto', marginRight: '10px', marginTop: '10px' }}
-                    onClick={() => setIsMenuOpen(true)}
-                >
-                    <MenuIcon />
-                </IconButton>
-                <SwipeableDrawer
-                    anchor='right'
-                    open={isMenuOpen}
-                    onClose={() => setIsMenuOpen(false)}
-                    onOpen={() => setIsMenuOpen(true)}
-                    PaperProps={{
-                        sx: {
-                            bgcolor: theme.baseColors.secondary,
-                            color: 'white',
-                            opacity: 0.9
-                        }
-                    }}  
-                    disableDiscovery={device.isIOS}
-                >
-                    <Box
-                        sx={{ width: '40vw' }}
-                        role='presentation'
-                        onClick={() => setIsMenuOpen(false)}
-                        onKeyDown={() => setIsMenuOpen(false)}
+        <div style={{minWidth: '100vw', minHeight: '100vh', borderRadius: '0px', display: 'block'}} className="backgroundGradient text-primary">
+            <div style={{minWidth: '100vw', height: '10vh', display: 'flex'}} className="bg-backgroundDark">
+                <Popover className="relative">
+                    <Popover.Button style={{marginTop: '5vw'}}>
+                        {MenuButton()}
+                    </Popover.Button>
+                    <Transition
+                        as={Fragment}
+                        enter="transition ease-out duration-200"
+                        enterFrom="opacity-0 translate-y-1"
+                        enterTo="opacity-100 translate-y-0"
+                        leave="transition ease-in duration-150"
+                        leaveFrom="opacity-100 translate-y-0"
+                        leaveTo="opacity-0 translate-y-1"
                     >
-                        <List>
-                            {menuList.map((item, index) => (
-                                <>
-                                    {index !== 0 && 
-                                        <Divider />}
-                                    <ListItem key={index} disablePadding>
-                                        <ListItemButton onClick={(event) => navigateMenu(item)}>
-                                            <ListItemText sx={{textAlign: 'center'}}>
-                                                {item.name}
-                                            </ListItemText>
-                                        </ListItemButton>
-                                    </ListItem>
-                                </>
-                            ))}
-                        </List>
-                    </Box>
-                </SwipeableDrawer>
+                        <Popover.Panel className="absolute z-10 top-0">
+                            <div className='overflow-hidden shadow-lg ring-1 ring-primaryDark ring-opacity-5' style={{minWidth: '50vw', minHeight: '100vh'}}>
+                                <div className='relative bg-backgroundDark text-primary opacity-80 flex' style={{ minWidth: '50vw', minHeight: '100vh' }}>
+                                    <div className='mt-auto mb-auto flex flex-col justify-evenly min-h-screen-50'>
+                                        {menuList.map((item, index) => 
+                                            <div key={index} className='text-center' style={{minWidth: '50vw', minHeight: '10vh'}}>
+                                                <button className='text-primary fill-primary' style={{minWidth: '50vw', minHeight: '10vh'}} onClick={() => navigateMenu(item)}>
+                                                    {item.name}
+                                                </button>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        </Popover.Panel>
+                    </Transition>
+                </Popover>
+                <button style={{ height: '5vh', width: '5vh', margin: 'auto', marginRight: '2.5vh', display: 'flex' }}
+                    className="text-primary fill-primaryDark bg-primaryDark rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                        className="w-6 h-6" style={{ height: '5vh', width: '5vh', margin: 'auto'}}>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                    </svg>
+                </button>
             </div>
             <div style={{minWidth: '100vw', height: '95vh', display: 'flex'}}>
                 <Outlet />
             </div>
-        </Paper>
+        </div>
     </>;
 }
