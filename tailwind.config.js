@@ -20,6 +20,7 @@ module.exports = {
 		fontFamily: {
 			sans: ["Graphik", "sans-serif"],
 			serif: ["Merriweather", "serif"],
+			"pulp-display": ["Pulp Display", "sans-serif"],
 		},
 		extend: {
 			spacing: {
@@ -33,11 +34,15 @@ module.exports = {
 				"screen-50": "50vh",
 			},
 			minHeight: {
+				"screen-15": "15vh",
+				"screen-20": "20vh",
 				"screen-50": "50vh",
 				"screen-80": "80vh",
+			},
+			minWidth: {
+				screen: "100vw",
 			},
 		},
 	},
 	plugins: [],
 };
-

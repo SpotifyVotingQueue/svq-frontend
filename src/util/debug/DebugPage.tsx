@@ -3,7 +3,7 @@ import { DeviceContext, DeviceContextIF, UserContext, UserContextIF } from "../.
 
 export default function DebugPage() {
     const device: DeviceContextIF = useContext(DeviceContext);
-    const user: UserContextIF = useContext(UserContext);
+    let user: UserContextIF = useContext(UserContext);
 
     return <div>
         <h1 className="font-bold">Device Debug</h1>
