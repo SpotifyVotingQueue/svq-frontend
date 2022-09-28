@@ -12,7 +12,7 @@ export default function Home(): JSX.Element {
         if (user.username && user.token) {
             navigate('/create');
         } else {
-            navigate('/login/create');
+            navigate('/login?redirect=create');
         }
     }
 

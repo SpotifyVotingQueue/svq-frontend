@@ -2,6 +2,7 @@ import { Popover, Transition } from '@headlessui/react';
 import React, { useEffect, useState, useContext, Fragment } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { DeviceContext } from '../../Providers';
+import { isDebug } from '../../util/debug/DebugEnv';
 import { MenuButton } from '../../util/widgets/Buttons';
 import './Menu.css';
 
@@ -50,7 +51,7 @@ export default function Menu() {
                 ]);
             }
 
-            if (process.env.REACT_APP_IS_DEBUG) {
+            if (isDebug()) {
                 setMenuList([
                     ...menuList,
                     {

@@ -9,3 +9,7 @@ export function ping() {
 export function userMe() {
     return fetcher.path('/api/v1/user/me').method('get').create();
 }
+
+export function createQueue() {
+    return fetcher.path('/api/v1/party').method('post').create();
+}

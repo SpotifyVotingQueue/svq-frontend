@@ -1,20 +1,25 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router";
+import { useSearchParams } from "react-router-dom";
 import logo from '../../../assets/media/logo.svg';
 import spotify from '../../../assets/media/spotifyFull.svg';
+import { isDebug } from "../../../util/debug/DebugEnv";
 import { userMe } from "../../../util/services/ServiceMethods";
 
 export default function Login(): JSX.Element {
-    let { next } = useParams();
+    let [searchParams] = useSearchParams();
     let navigate = useNavigate();
 
     function login(): void {
         const loginFunc = userMe();
         loginFunc({}).then((res) => {
             console.log(res.data);
-            navigate(`/${next}`);
+            navigate(`/${searchParams.get('redirect')}`);
         }).catch(() => {
             console.log("Login failed");
+            if (isDebug()) {
+                navigate(`/${searchParams.get('redirect')}`);
+            }
         });
     }
 

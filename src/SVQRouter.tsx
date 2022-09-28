@@ -3,6 +3,7 @@ import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 import Home from './components/home/Home';
 import Login from './components/host/create-queue/Login';
 import Menu from './components/navigation/Menu';
+import Overview from './components/queue/Overview';
 import ErrorPage from './ErrorPage';
 import DebugPage from './util/debug/DebugPage';
 
@@ -19,12 +20,16 @@ export default function SVQRouter() {
                     element: <Home />
                 },
                 {
-                    path: 'login/:next',
+                    path: 'login',
                     element: <Login />
                 },
                 {
                     path: 'create',
-                    element: <Outlet />,
+                    element: <Overview />,
+                },
+                {
+                    path: 'queue/:id',
+                    element: <Overview />,
                 },
                 {
                     path: 'debug',

@@ -16,11 +16,13 @@ module.exports = {
 			backgroundDark: "#0F0F1D",
 			logo: "#3E68FF",
 			spotify: "#1DB954",
+			transparent: "transparent",
 		},
 		fontFamily: {
 			sans: ["Graphik", "sans-serif"],
 			serif: ["Merriweather", "serif"],
 			"pulp-display": ["Pulp Display", "sans-serif"],
+			roboto: ["Roboto", "sans-serif"],
 		},
 		extend: {
 			spacing: {
@@ -32,6 +34,11 @@ module.exports = {
 			},
 			height: {
 				"screen-50": "50vh",
+			},
+			width: {
+				0.2: "20%",
+				0.3: "30%",
+				0.4: "40%",
 			},
 			minHeight: {
 				"screen-15": "15vh",
