@@ -5,6 +5,7 @@ import { createQueue } from "../../util/services/ServiceMethods";
 import { components } from "../../services-gen/svq-backend";
 import { isDebug } from "../../util/debug/DebugEnv";
 import { UserContext, UserContextIF } from "../../Providers";
+import { playlistSkeleton, queueShortSkeleton } from "../../util/widgets/Skeletons";
 
 export default function Overview() {
     const { pathname } = useLocation();
@@ -17,6 +18,8 @@ export default function Overview() {
 
     const [bTextID, setBTextID] = useState("Kopieren");
     const [bTextURL, setBTextURL] = useState("Kopieren");
+
+    const [playlists, setPlaylists] = useState(undefined);
 
     const [qInfoOpen, setQInfoOpen] = useState(false);
     useEffect(() => {
@@ -79,6 +82,10 @@ export default function Overview() {
         });
     }
 
+    function nav2Vote(): void {
+
+    }
+
     return <>
         <div className="flex flex-col min-w-screen">
             <Transition appear show={qInfoOpen} as={Fragment}>
@@ -102,7 +109,7 @@ export default function Overview() {
                             </div>
                             <div className="flex mr-4 ml-4 mt-3 justify-between">
                                 <p className="text-primary font-roboto w-0.3">Link:</p>
-                                <input type="url" value={joinURL} readOnly className="w-0.3 pl-1 pr-1 rounded-sm text-center text-primary bg-backgroundLight"/>
+                                <input type="url" value={joinURL} readOnly className="w-0.3 pl-1 pr-1 rounded-sm text-center text-lg text-primary bg-backgroundLight"/>
                                 <button className="w-0.3 text-primary text-sm  font-roboto border-2 border-backgroundDark rounded-2xl bg-primaryDark pl-2 pr-2" onClick={() => copyURL()}>{bTextURL}</button>
                             </div>
                             <div className="flex mr-4 ml-4 mt-6 mb-4">
@@ -112,8 +119,26 @@ export default function Overview() {
                     </Transition.Child>
                 </Dialog>
             </Transition>
-            <div className="min-h-screen-20 ml-6 mr-6 mt-7">
-                <h1 className="text-2xl text-primary font-roboto">Deine Playlists</h1>
+            <div className="min-h-screen-20 mx-5 mt-7 flex flex-col">
+                <h1 className="text-2xl text-primary font-roboto mb-2">Deine Playlists</h1>
+                {playlists ? 
+                    <div>
+                        {/*TODO: Playlist cards*/}
+                    </div>
+                    : playlistSkeleton()
+                }
+            </div>
+            <div className="min-h-screen-20 mx-5 mt-7 flex flex-col">
+                <div className="flex w-full justify-between mb-3">
+                    <h1 className="text-2xl text-primary font-roboto">Warteschlange</h1>
+                    <button className="text-primary text-lg font-roboto rounded-full bg-secondary px-4" onClick={() => nav2Vote()}>Abstimmen</button>
+                </div>
+                {undefined ?
+                    <div>
+                        {/*TODO: Queue cards*/}
+                    </div>
+                    : queueShortSkeleton()
+                }
             </div>
         </div>
     </>;

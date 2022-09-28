@@ -17,6 +17,7 @@ module.exports = {
 			logo: "#3E68FF",
 			spotify: "#1DB954",
 			transparent: "transparent",
+			bgPlaylist: "#393442",
 		},
 		fontFamily: {
 			sans: ["Graphik", "sans-serif"],
@@ -34,11 +35,13 @@ module.exports = {
 			},
 			height: {
 				"screen-50": "50vh",
+				0.45: "45%",
 			},
 			width: {
 				0.2: "20%",
 				0.3: "30%",
 				0.4: "40%",
+				0.45: "45%",
 			},
 			minHeight: {
 				"screen-15": "15vh",
