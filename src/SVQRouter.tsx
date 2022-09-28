@@ -3,7 +3,7 @@ import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 import Home from './components/home/Home';
 import Menu from './components/navigation/Menu';
 import ErrorPage from './ErrorPage';
-import DeviceDebug from './util/debug/DeviceDebug';
+import DebugPage from './util/debug/DebugPage';
 
 export default function SVQRouter() {
 
@@ -23,7 +23,7 @@ export default function SVQRouter() {
                     children: [
                         {
                             path: 'device',
-                            element: <DeviceDebug />
+                            element: <DebugPage />
                         }
                     ]
                 }
