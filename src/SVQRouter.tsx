@@ -4,6 +4,7 @@ import Home from './components/home/Home';
 import Login from './components/host/create-queue/Login';
 import Menu from './components/navigation/Menu';
 import Overview from './components/queue/Overview';
+import Queue from './components/queue/Queue';
 import ErrorPage from './ErrorPage';
 import DebugPage from './util/debug/DebugPage';
 
@@ -29,7 +30,11 @@ export default function SVQRouter() {
                 },
                 {
                     path: 'queue/:id',
-                    element: <Overview />,
+                    element: <Overview />
+                },
+                {
+                    path: 'queue/:id/vote',
+                    element: <Queue />
                 },
                 {
                     path: 'debug',

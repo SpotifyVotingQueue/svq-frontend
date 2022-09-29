@@ -1,4 +1,5 @@
 import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { queueShortSkeleton } from "../../../util/widgets/Skeletons";
 
 export interface ShortQueueProps {
@@ -6,9 +7,11 @@ export interface ShortQueueProps {
 }
 
 export default function ShortQueue(props: ShortQueueProps) {
+    const { pathname } = useLocation();
+    let navigate = useNavigate();
 
     function nav2Vote(): void {
-
+        navigate(`${pathname}/vote`);
     }
 
     return <div className="min-h-screen-20 mx-5 mt-7 flex flex-col">
