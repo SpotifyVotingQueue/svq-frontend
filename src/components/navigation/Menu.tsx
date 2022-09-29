@@ -69,8 +69,8 @@ export default function Menu() {
     }
 
     return <>
-        <div style={{minWidth: '100vw', minHeight: '100vh', borderRadius: '0px', display: 'block'}} className="backgroundGradient text-primary">
-            <div style={{minWidth: '100vw', height: '10vh', display: 'flex'}} className="bg-backgroundDark">
+        <div style={{minWidth: '100vw', minHeight: '100%', borderRadius: '0px', display: 'block'}} className="backgroundGradient text-primary">
+            <div style={{minWidth: '100vw', height: '10vh', display: 'flex'}} className="bg-backgroundDark fixed top-0 left-0 z-10">
                 <Popover className="relative">
                     <Popover.Button style={{marginTop: '5vw'}}>
                         {MenuButton()}
@@ -110,7 +110,7 @@ export default function Menu() {
                     </svg>
                 </button>
             </div>
-            <div style={{minWidth: '100vw', height: '95vh', display: 'flex'}}>
+            <div style={{minWidth: '100vw', height: '100%', display: 'flex'}} className="mt-20">
                 <Outlet />
             </div>
         </div>

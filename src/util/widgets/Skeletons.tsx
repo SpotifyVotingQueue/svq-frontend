@@ -55,3 +55,78 @@ export function queueShortSkeleton(): JSX.Element {
                         </div>
                     </div>
 }
+
+export function recommendationsSkeleton(): JSX.Element {
+    return <>
+                        <div className="h-14 flex">
+                            <div className="h-14 w-14 rounded-lg bg-primaryDark animate-pulse"></div>
+                            <div className="h-14 w-40 ml-4 flex flex-col justify-center space-y-2.5">
+                                <div className="h-4 w-32 rounded bg-primaryDark animate-pulse"></div>
+                                <div className="h-2 w-24 rounded bg-primaryDark animate-pulse"></div>
+                            </div>
+                            <button className="h-14 w-14 ml-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-14 h-14">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div className="h-14 flex">
+                            <div className="h-14 w-14 rounded-lg bg-primaryDark animate-pulse"></div>
+                            <div className="h-14 w-40 ml-4 flex flex-col justify-center space-y-2.5">
+                                <div className="h-4 w-32 rounded bg-primaryDark animate-pulse"></div>
+                                <div className="h-2 w-24 rounded bg-primaryDark animate-pulse"></div>
+                            </div>
+                            <button className="h-14 w-14 ml-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-14 h-14">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div className="h-14 flex">
+                            <div className="h-14 w-14 rounded-lg bg-primaryDark animate-pulse"></div>
+                            <div className="h-14 w-40 ml-4 flex flex-col justify-center space-y-2.5">
+                                <div className="h-4 w-32 rounded bg-primaryDark animate-pulse"></div>
+                                <div className="h-2 w-24 rounded bg-primaryDark animate-pulse"></div>
+                            </div>
+                            <button className="h-14 w-14 ml-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-14 h-14">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div className="h-14 flex">
+                            <div className="h-14 w-14 rounded-lg bg-primaryDark animate-pulse"></div>
+                            <div className="h-14 w-40 ml-4 flex flex-col justify-center space-y-2.5">
+                                <div className="h-4 w-32 rounded bg-primaryDark animate-pulse"></div>
+                                <div className="h-2 w-24 rounded bg-primaryDark animate-pulse"></div>
+                            </div>
+                            <button className="h-14 w-14 ml-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-14 h-14">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div className="h-14 flex">
+                            <div className="h-14 w-14 rounded-lg bg-primaryDark animate-pulse"></div>
+                            <div className="h-14 w-40 ml-4 flex flex-col justify-center space-y-2.5">
+                                <div className="h-4 w-32 rounded bg-primaryDark animate-pulse"></div>
+                                <div className="h-2 w-24 rounded bg-primaryDark animate-pulse"></div>
+                            </div>
+                            <button className="h-14 w-14 ml-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-14 h-14">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                </svg>
+                            </button>
+                        </div>
+                    </>
+}
+
+export function songSkeleton(): JSX.Element {
+    return <div className="h-15 flex mt-5 mx-5">
+                    <div className="h-14 w-14 rounded-lg bg-primaryDark animate-pulse"></div>
+                    <div className="h-14 w-40 ml-4 flex flex-col justify-center space-y-2.5">
+                        <div className="h-4 w-32 rounded bg-primaryDark animate-pulse"></div>
+                        <div className="h-2 w-24 rounded bg-primaryDark animate-pulse"></div>
+                    </div>
+                </div>
+}

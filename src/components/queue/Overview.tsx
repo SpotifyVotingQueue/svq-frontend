@@ -5,7 +5,7 @@ import { createQueue } from "../../util/services/ServiceMethods";
 import { components } from "../../services-gen/svq-backend";
 import { isDebug } from "../../util/debug/DebugEnv";
 import { UserContext, UserContextIF } from "../../Providers";
-import { playlistSkeleton, queueShortSkeleton } from "../../util/widgets/Skeletons";
+import { playlistSkeleton, queueShortSkeleton, recommendationsSkeleton, songSkeleton } from "../../util/widgets/Skeletons";
 
 export default function Overview() {
     const { pathname } = useLocation();
@@ -21,6 +21,8 @@ export default function Overview() {
 
     const [playlists, setPlaylists] = useState(undefined);
 
+    const [songProgress, setSongProgress] = useState(0);
+
     const [qInfoOpen, setQInfoOpen] = useState(false);
     useEffect(() => {
         let debug = isDebug();
@@ -34,11 +36,21 @@ export default function Overview() {
         } else if (pathname.startsWith("/queue/")) {
             if (pathname.endsWith('debug')) {
                 //Mock data for debug or load static data
+                mockProgress();
             } else {
                 //Load queue data from server
             }
         }
     }, []);
+
+    async function mockProgress() {
+        let i = 0;
+        while (i < 100) {
+            await new Promise(r => setTimeout(r, 100));
+            setSongProgress(i);
+            i = i + 0.05;
+        }
+    }
 
     function createNewQueue(debug: boolean): void {
             let createFunc = createQueue();
@@ -87,7 +99,7 @@ export default function Overview() {
     }
 
     return <>
-        <div className="flex flex-col min-w-screen">
+        <div className="flex flex-col min-w-screen mb-4">
             <Transition appear show={qInfoOpen} as={Fragment}>
                 <Dialog onClose={() => switch2Queue()} className="fixed top-0 left-0 z-20 bg-backgroundDark bg-opacity-90 min-h-screen min-w-screen">
                     <Transition.Child
@@ -140,6 +152,26 @@ export default function Overview() {
                     : queueShortSkeleton()
                 }
             </div>
+            <div className="h-fit mx-5 mt-7 flex flex-col justify-start space-y-3">
+                    <h1 className="text-2xl text-primary font-roboto">Vorschläge</h1>
+                {undefined ?
+                    <div>
+                        {/*TODO: Queue cards*/}
+                    </div>
+                    : recommendationsSkeleton()
+                }
+            </div>
+        </div>
+        <div className="fixed bottom-0 left-0 z-10 w-full h-1/6 rounded-t-lg bg-secondary shadow-xl">
+            <div className="mt-8 mx-5 h-3 rounded-full bg-primaryDark">
+                <div className="h-3 rounded-full bg-primary" style={{width: `${songProgress}%`}}></div>
+            </div>
+            {undefined ?
+                <div>
+                    {/*TODO: Song info*/}
+                </div>
+                : songSkeleton()
+            }
         </div>
     </>;
 }
