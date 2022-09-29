@@ -6,6 +6,10 @@ import { components } from "../../services-gen/svq-backend";
 import { isDebug } from "../../util/debug/DebugEnv";
 import { UserContext, UserContextIF } from "../../Providers";
 import { playlistSkeleton, queueShortSkeleton, recommendationsSkeleton, songSkeleton } from "../../util/widgets/Skeletons";
+import Playlists from "./playlists/Playlists";
+import ShortQueue from "./queue-short/ShortQueue";
+import Recomendations from "./recomendations/Recomendations";
+import Player from "./player/Player";
 
 export default function Overview() {
     const { pathname } = useLocation();
@@ -20,8 +24,10 @@ export default function Overview() {
     const [bTextURL, setBTextURL] = useState("Kopieren");
 
     const [playlists, setPlaylists] = useState(undefined);
+    const [queue, setQueue] = useState(undefined);
+    const [recomendations, setRecomendations] = useState(undefined);
+    const [currentSong, setCurrentSong] = useState(undefined as string | undefined); //TODO: add type
 
-    const [songProgress, setSongProgress] = useState(0);
 
     const [qInfoOpen, setQInfoOpen] = useState(false);
     useEffect(() => {
@@ -36,21 +42,12 @@ export default function Overview() {
         } else if (pathname.startsWith("/queue/")) {
             if (pathname.endsWith('debug')) {
                 //Mock data for debug or load static data
-                mockProgress();
+                setCurrentSong("undefined");
             } else {
                 //Load queue data from server
             }
         }
     }, []);
-
-    async function mockProgress() {
-        let i = 0;
-        while (i < 100) {
-            await new Promise(r => setTimeout(r, 100));
-            setSongProgress(i);
-            i = i + 0.05;
-        }
-    }
 
     function createNewQueue(debug: boolean): void {
             let createFunc = createQueue();
@@ -94,10 +91,6 @@ export default function Overview() {
         });
     }
 
-    function nav2Vote(): void {
-
-    }
-
     return <>
         <div className="flex flex-col min-w-screen mb-4">
             <Transition appear show={qInfoOpen} as={Fragment}>
@@ -131,47 +124,10 @@ export default function Overview() {
                     </Transition.Child>
                 </Dialog>
             </Transition>
-            <div className="min-h-screen-20 mx-5 mt-7 flex flex-col">
-                <h1 className="text-2xl text-primary font-roboto mb-2">Deine Playlists</h1>
-                {playlists ? 
-                    <div>
-                        {/*TODO: Playlist cards*/}
-                    </div>
-                    : playlistSkeleton()
-                }
-            </div>
-            <div className="min-h-screen-20 mx-5 mt-7 flex flex-col">
-                <div className="flex w-full justify-between mb-3">
-                    <h1 className="text-2xl text-primary font-roboto">Warteschlange</h1>
-                    <button className="text-primary text-lg font-roboto rounded-full bg-secondary px-4" onClick={() => nav2Vote()}>Abstimmen</button>
-                </div>
-                {undefined ?
-                    <div>
-                        {/*TODO: Queue cards*/}
-                    </div>
-                    : queueShortSkeleton()
-                }
-            </div>
-            <div className="h-fit mx-5 mt-7 flex flex-col justify-start space-y-3">
-                    <h1 className="text-2xl text-primary font-roboto">Vorschläge</h1>
-                {undefined ?
-                    <div>
-                        {/*TODO: Queue cards*/}
-                    </div>
-                    : recommendationsSkeleton()
-                }
-            </div>
+            <Playlists playlists={playlists} />
+            <ShortQueue queue={queue} />
+            <Recomendations recomendations={recomendations} />
         </div>
-        <div className="fixed bottom-0 left-0 z-10 w-full h-1/6 rounded-t-lg bg-secondary shadow-xl">
-            <div className="mt-8 mx-5 h-3 rounded-full bg-primaryDark">
-                <div className="h-3 rounded-full bg-primary" style={{width: `${songProgress}%`}}></div>
-            </div>
-            {undefined ?
-                <div>
-                    {/*TODO: Song info*/}
-                </div>
-                : songSkeleton()
-            }
-        </div>
+        <Player currentSong={currentSong} />
     </>;
 }
