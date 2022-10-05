@@ -1,5 +1,5 @@
 export function MenuButton(): JSX.Element {
-    return <button style={{ height: '5vh', width: '5vh', margin: 'auto', marginLeft: '2.5vh', display: 'flex' }}
+    return <button style={{ height: '5vh', width: '5vh', margin: 'auto', marginLeft: '2.5vh', marginTop: '2.5vh', display: 'flex' }}
         className="text-primary fill-primary">
         <svg xmlns="http://www.w3.org/2000/svg"
             style={{ height: '5vh', width: '5vh', margin: 'auto' }}

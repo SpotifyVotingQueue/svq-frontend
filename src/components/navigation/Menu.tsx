@@ -72,7 +72,7 @@ export default function Menu() {
         <div style={{minWidth: '100vw', minHeight: '100%', borderRadius: '0px', display: 'block'}} className="backgroundGradient text-primary">
             <div style={{minWidth: '100vw', height: '10vh', display: 'flex'}} className="bg-backgroundDark fixed top-0 left-0 z-10">
                 <Popover className="relative">
-                    <Popover.Button style={{marginTop: '5vw'}}>
+                    <Popover.Button>
                         {MenuButton()}
                     </Popover.Button>
                     <Transition
