@@ -4,7 +4,7 @@ import { useLocation, useNavigate, useParams } from "react-router";
 import { createQueue } from "../../util/services/ServiceMethods";
 import { components } from "../../services-gen/svq-backend";
 import { isDebug } from "../../util/debug/DebugEnv";
-import { UserContext, UserContextIF } from "../../Providers";
+import { QueueInformationContext, QueueInformationIF, UserContext, UserContextIF } from "../../Providers";
 import Playlists from "./playlists/Playlists";
 import ShortQueue from "./queue-short/ShortQueue";
 import Recomendations from "./recomendations/Recomendations";
@@ -16,8 +16,7 @@ export default function Overview() {
     const { id } = useParams();
     let user: UserContextIF = useContext(UserContext);
 
-    const [queueID, setQueueID] = useState(undefined as string | undefined);
-    const [joinURL, setJoinURL] = useState(undefined as string | undefined);
+    let queueInformation: QueueInformationIF = useContext(QueueInformationContext);
 
     const [bTextID, setBTextID] = useState("Kopieren");
     const [bTextURL, setBTextURL] = useState("Kopieren");
@@ -53,14 +52,14 @@ export default function Overview() {
             type PartyCreatedDto = components["schemas"]["PartyCreatedDto"];
             createFunc({}).then((res) => {
                 let data = res.data as PartyCreatedDto;
-                setQueueID(data.joinCode);
-                setJoinURL(process.env.REACT_APP_APPLICATION_BASE_URL + '/queue/' + data.joinCode);
+                queueInformation.setQueueId!(data.joinCode);
+                queueInformation.setJoinUrl!(process.env.REACT_APP_APPLICATION_BASE_URL + '/queue/' + data.joinCode);
                 setQInfoOpen(true);
             }).catch((err) => {
                 console.log(err);
                 if (debug) {
-                    setQueueID("debug");
-                    setJoinURL("https://hipqueue.de/join/debug");
+                    queueInformation.setQueueId!("debug");
+                    queueInformation.setJoinUrl!("https://hipqueue.de/join/debug");
                     setQInfoOpen(true);
                 }
                 //TODO: Error handling
@@ -69,11 +68,11 @@ export default function Overview() {
 
     function switch2Queue() {
         setQInfoOpen(false);
-        navigate(`/queue/${queueID}`);
+        navigate(`/queue/${queueInformation.queueId}`);
     }
 
     function copyID(): void {
-        navigator.clipboard.writeText(queueID!).then(() => {
+        navigator.clipboard.writeText(queueInformation.queueId!).then(() => {
             setBTextID("✔️ Kopiert!");
             setTimeout(() => {
                 setBTextID("Kopieren");
@@ -82,7 +81,7 @@ export default function Overview() {
     }
 
     function copyURL(): void {
-        navigator.clipboard.writeText(joinURL!).then(() => {
+        navigator.clipboard.writeText(queueInformation.joinUrl!).then(() => {
             setBTextURL("✔️ Kopiert!");
             setTimeout(() => {
                 setBTextURL("Kopieren");
@@ -108,12 +107,12 @@ export default function Overview() {
                             <Dialog.Description className="text-primaryDark font-roboto mr-4 ml-4 mt-4 text-center">Du kannst deine Gäste entweder per Beitritts-Code oder Link einladen</Dialog.Description>
                             <div className="flex mr-4 ml-4 mt-4 justify-between">
                                 <p className="text-primary font-roboto w-0.3">Beitrittscode:</p>
-                                <input type="text" value={queueID} readOnly className="w-0.3 rounded-sm text-center text-primary font-bold text-lg bg-backgroundLight" />
+                                <input type="text" value={queueInformation.queueId} readOnly className="w-0.3 rounded-sm text-center text-primary font-bold text-lg bg-backgroundLight" />
                                 <button className="w-0.3 text-primary text-sm font-roboto border-2 border-backgroundDark rounded-2xl bg-primaryDark pl-2 pr-2" onClick={() => copyID()}>{bTextID}</button>
                             </div>
                             <div className="flex mr-4 ml-4 mt-3 justify-between">
                                 <p className="text-primary font-roboto w-0.3">Link:</p>
-                                <input type="url" value={joinURL} readOnly className="w-0.3 pl-1 pr-1 rounded-sm text-center text-lg text-primary bg-backgroundLight"/>
+                                <input type="url" value={queueInformation.joinUrl} readOnly className="w-0.3 pl-1 pr-1 rounded-sm text-center text-lg text-primary bg-backgroundLight"/>
                                 <button className="w-0.3 text-primary text-sm  font-roboto border-2 border-backgroundDark rounded-2xl bg-primaryDark pl-2 pr-2" onClick={() => copyURL()}>{bTextURL}</button>
                             </div>
                             <div className="flex mr-4 ml-4 mt-6 mb-4">

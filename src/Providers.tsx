@@ -17,6 +17,14 @@ export interface UserContextIF {
 }
 export const UserContext = React.createContext<UserContextIF>({ username: undefined, setUsername: undefined, token: undefined, setToken: undefined });
 
+export interface QueueInformationIF {
+    queueId?: string;
+    setQueueId?: React.Dispatch<React.SetStateAction<string | undefined>>;
+    joinUrl?: string;
+    setJoinUrl?: React.Dispatch<React.SetStateAction<string | undefined>>;
+}
+export const QueueInformationContext = React.createContext<QueueInformationIF>({ queueId: undefined, setQueueId: undefined, joinUrl: undefined, setJoinUrl: undefined });
+
 export default function Providers(props: ProviderProps) {
 
     function determineIOS(): boolean {
@@ -25,11 +33,15 @@ export default function Providers(props: ProviderProps) {
 
     const [username, setUsername] = useState(undefined as string | undefined);
     const [token, setToken] = useState(undefined as string | undefined);
+    const [queueId, setQueueId] = useState(undefined as string | undefined);
+    const [joinUrl, setJoinUrl] = useState(undefined as string | undefined);
 
     return <>
         <DeviceContext.Provider value={{ isIOS: determineIOS() }}>
             <UserContext.Provider value={{ username, setUsername, token, setToken }}>
-                {props.children}
+                <QueueInformationContext.Provider value={{ queueId, setQueueId, joinUrl, setJoinUrl }}>
+                    {props.children}
+                </QueueInformationContext.Provider>
             </UserContext.Provider>
         </DeviceContext.Provider>
     </>
