@@ -351,3 +351,15 @@ export function queueSkeleton(): JSX.Element {
                         </div>
                     </>
 }
+
+export function nextSongSkeleton(): JSX.Element {
+    return <>
+                        <div className="flex w-full justify-between h-14 space-x-3">
+                            <div className="grow-0 h-14 w-14 rounded-lg bg-primaryDark animate-pulse"></div>
+                            <div className="grow flex flex-col space-y-2.5 justify-center">
+                                <div className="h-4 w-32 rounded bg-primaryDark animate-pulse"></div>
+                                <div className="h-2 w-24 rounded bg-primaryDark animate-pulse"></div>
+                            </div>
+                        </div>
+                    </>
+}

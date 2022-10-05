@@ -12,6 +12,7 @@
     "@types/node": "^16.11.59",
     "@types/react": "^18.0.20",
     "@types/react-dom": "^18.0.6",
+    "openapi-typescript": "^5.4.1",
     "openapi-typescript-fetch": "^1.1.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -25,7 +26,7 @@
     "debug": "env-cmd -f ./.env.debug react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "generate-service": "openapi-typescript ./openapi/svq-backend.json -o ./src/services/svq-backend.ts"
+    "generate-service": "openapi-typescript ./openapi/svq-backend.json -o ./src/services-gen/svq-backend.ts"
   },
   "eslintConfig": {
     "extends": [
