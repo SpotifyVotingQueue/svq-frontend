@@ -5,7 +5,6 @@ import { createQueue } from "../../util/services/ServiceMethods";
 import { components } from "../../services-gen/svq-backend";
 import { isDebug } from "../../util/debug/DebugEnv";
 import { UserContext, UserContextIF } from "../../Providers";
-import { playlistSkeleton, queueShortSkeleton, recommendationsSkeleton, songSkeleton } from "../../util/widgets/Skeletons";
 import Playlists from "./playlists/Playlists";
 import ShortQueue from "./queue-short/ShortQueue";
 import Recomendations from "./recomendations/Recomendations";
