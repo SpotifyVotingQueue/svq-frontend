@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
+import { MenuContext, MenuContextIF } from "../../Providers";
 import { isDebug } from "../../util/debug/DebugEnv";
 import { nextSongSkeleton, queueSkeleton } from "../../util/widgets/Skeletons";
+import SearchBar from "../navigation/menuitems/SearchBar";
 
 export default function Queue() {
     let { id } = useParams();

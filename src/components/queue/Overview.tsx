@@ -4,11 +4,13 @@ import { useLocation, useNavigate, useParams } from "react-router";
 import { createQueue } from "../../util/services/ServiceMethods";
 import { components } from "../../services-gen/svq-backend";
 import { isDebug } from "../../util/debug/DebugEnv";
-import { QueueInformationContext, QueueInformationIF, UserContext, UserContextIF } from "../../Providers";
+import { MenuContext, MenuContextIF, QueueInformationContext, QueueInformationIF, UserContext, UserContextIF } from "../../Providers";
 import Playlists from "./playlists/Playlists";
 import ShortQueue from "./queue-short/ShortQueue";
 import Recomendations from "./recomendations/Recomendations";
 import Player from "./player/Player";
+import SearchBar from "../navigation/menuitems/SearchBar";
+import { BurgerMenu } from "../navigation/menuitems/BurgerMenu";
 
 export default function Overview() {
     const { pathname } = useLocation();
@@ -17,6 +19,8 @@ export default function Overview() {
     let user: UserContextIF = useContext(UserContext);
 
     let queueInformation: QueueInformationIF = useContext(QueueInformationContext);
+
+    let menu: MenuContextIF = useContext(MenuContext);
 
     const [bTextID, setBTextID] = useState("Kopieren");
     const [bTextURL, setBTextURL] = useState("Kopieren");
@@ -45,6 +49,9 @@ export default function Overview() {
                 //Load queue data from server
             }
         }
+
+        menu.setLeft(<BurgerMenu />)
+        menu.setMiddle(<SearchBar />);
     }, []);
 
     function createNewQueue(debug: boolean): void {
