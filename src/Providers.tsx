@@ -31,7 +31,7 @@ export interface MenuContextIF {
     left: JSX.Element;
     setLeft: React.Dispatch<React.SetStateAction<JSX.Element>>;
     middle?: JSX.Element;
-    setMiddle: React.Dispatch<React.SetStateAction<JSX.Element>>;
+    setMiddle: React.Dispatch<React.SetStateAction<JSX.Element | undefined>>;
     right: JSX.Element;
     setRight: React.Dispatch<React.SetStateAction<JSX.Element>>;
 }
@@ -49,7 +49,7 @@ export default function Providers(props: ProviderProps) {
     const [joinUrl, setJoinUrl] = useState(undefined as string | undefined);
 
     const [left, setLeft] = useState(<BurgerMenu />);
-    const [middle, setMiddle] = useState(undefined as any);
+    const [middle, setMiddle] = useState(undefined as JSX.Element | undefined);
     const [right, setRight] = useState(profilePlaceholder());
 
     return <>

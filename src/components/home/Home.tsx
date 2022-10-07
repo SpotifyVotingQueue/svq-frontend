@@ -1,12 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import logo from '../../assets/media/logo.svg'
-import { UserContext, UserContextIF } from '../../Providers';
+import { MenuContext, MenuContextIF, UserContext, UserContextIF } from '../../Providers';
 
 export default function Home(): JSX.Element {
     let navigate = useNavigate();
 
     let user: UserContextIF = useContext(UserContext);
+    let menu: MenuContextIF = useContext(MenuContext);
 
     function onCreateQueue(): void {
         if (user.username && user.token) {
@@ -15,6 +16,10 @@ export default function Home(): JSX.Element {
             navigate('/login?redirect=create');
         }
     }
+
+    useEffect(() => {
+        menu.setMiddle(undefined);
+    }, []);
 
     return <div className='overflow-hidden flex m-auto h-full'>
         <div style={{ height: '91.1vh', margin: 'auto', display: 'flex'}}>

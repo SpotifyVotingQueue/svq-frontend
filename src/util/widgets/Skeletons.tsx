@@ -363,3 +363,152 @@ export function nextSongSkeleton(): JSX.Element {
                         </div>
                     </>
 }
+
+export function resultsSkeleton(): JSX.Element {
+    return <>
+                        <div className="flex w-full justify-between h-14 space-x-3">
+                            <div className="grow-0 h-14 w-14 rounded-lg bg-primaryDark animate-pulse"></div>
+                            <div className="grow flex flex-col space-y-2.5 justify-center">
+                                <div className="h-4 w-32 rounded bg-primaryDark animate-pulse"></div>
+                                <div className="h-2 w-24 rounded bg-primaryDark animate-pulse"></div>
+                            </div>
+                            <button className="h-14 w-14 flex grow-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-14 h-14">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div className="flex w-full justify-between h-14 space-x-3">
+                            <div className="grow-0 h-14 w-14 rounded-lg bg-primaryDark animate-pulse"></div>
+                            <div className="grow flex flex-col space-y-2.5 justify-center">
+                                <div className="h-4 w-32 rounded bg-primaryDark animate-pulse"></div>
+                                <div className="h-2 w-24 rounded bg-primaryDark animate-pulse"></div>
+                            </div>
+                            <button className="h-14 w-14 flex grow-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-14 h-14">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div className="flex w-full justify-between h-14 space-x-3">
+                            <div className="grow-0 h-14 w-14 rounded-lg bg-primaryDark animate-pulse"></div>
+                            <div className="grow flex flex-col space-y-2.5 justify-center">
+                                <div className="h-4 w-32 rounded bg-primaryDark animate-pulse"></div>
+                                <div className="h-2 w-24 rounded bg-primaryDark animate-pulse"></div>
+                            </div>
+                            <button className="h-14 w-14 flex grow-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-14 h-14">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div className="flex w-full justify-between h-14 space-x-3">
+                            <div className="grow-0 h-14 w-14 rounded-lg bg-primaryDark animate-pulse"></div>
+                            <div className="grow flex flex-col space-y-2.5 justify-center">
+                                <div className="h-4 w-32 rounded bg-primaryDark animate-pulse"></div>
+                                <div className="h-2 w-24 rounded bg-primaryDark animate-pulse"></div>
+                            </div>
+                            <button className="h-14 w-14 flex grow-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-14 h-14">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div className="flex w-full justify-between h-14 space-x-3">
+                            <div className="grow-0 h-14 w-14 rounded-lg bg-primaryDark animate-pulse"></div>
+                            <div className="grow flex flex-col space-y-2.5 justify-center">
+                                <div className="h-4 w-32 rounded bg-primaryDark animate-pulse"></div>
+                                <div className="h-2 w-24 rounded bg-primaryDark animate-pulse"></div>
+                            </div>
+                            <button className="h-14 w-14 flex grow-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-14 h-14">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div className="flex w-full justify-between h-14 space-x-3">
+                            <div className="grow-0 h-14 w-14 rounded-lg bg-primaryDark animate-pulse"></div>
+                            <div className="grow flex flex-col space-y-2.5 justify-center">
+                                <div className="h-4 w-32 rounded bg-primaryDark animate-pulse"></div>
+                                <div className="h-2 w-24 rounded bg-primaryDark animate-pulse"></div>
+                            </div>
+                            <button className="h-14 w-14 flex grow-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-14 h-14">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div className="flex w-full justify-between h-14 space-x-3">
+                            <div className="grow-0 h-14 w-14 rounded-lg bg-primaryDark animate-pulse"></div>
+                            <div className="grow flex flex-col space-y-2.5 justify-center">
+                                <div className="h-4 w-32 rounded bg-primaryDark animate-pulse"></div>
+                                <div className="h-2 w-24 rounded bg-primaryDark animate-pulse"></div>
+                            </div>
+                            <button className="h-14 w-14 flex grow-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-14 h-14">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div className="flex w-full justify-between h-14 space-x-3">
+                            <div className="grow-0 h-14 w-14 rounded-lg bg-primaryDark animate-pulse"></div>
+                            <div className="grow flex flex-col space-y-2.5 justify-center">
+                                <div className="h-4 w-32 rounded bg-primaryDark animate-pulse"></div>
+                                <div className="h-2 w-24 rounded bg-primaryDark animate-pulse"></div>
+                            </div>
+                            <button className="h-14 w-14 flex grow-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-14 h-14">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div className="flex w-full justify-between h-14 space-x-3">
+                            <div className="grow-0 h-14 w-14 rounded-lg bg-primaryDark animate-pulse"></div>
+                            <div className="grow flex flex-col space-y-2.5 justify-center">
+                                <div className="h-4 w-32 rounded bg-primaryDark animate-pulse"></div>
+                                <div className="h-2 w-24 rounded bg-primaryDark animate-pulse"></div>
+                            </div>
+                            <button className="h-14 w-14 flex grow-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-14 h-14">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div className="flex w-full justify-between h-14 space-x-3">
+                            <div className="grow-0 h-14 w-14 rounded-lg bg-primaryDark animate-pulse"></div>
+                            <div className="grow flex flex-col space-y-2.5 justify-center">
+                                <div className="h-4 w-32 rounded bg-primaryDark animate-pulse"></div>
+                                <div className="h-2 w-24 rounded bg-primaryDark animate-pulse"></div>
+                            </div>
+                            <button className="h-14 w-14 flex grow-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-14 h-14">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div className="flex w-full justify-between h-14 space-x-3">
+                            <div className="grow-0 h-14 w-14 rounded-lg bg-primaryDark animate-pulse"></div>
+                            <div className="grow flex flex-col space-y-2.5 justify-center">
+                                <div className="h-4 w-32 rounded bg-primaryDark animate-pulse"></div>
+                                <div className="h-2 w-24 rounded bg-primaryDark animate-pulse"></div>
+                            </div>
+                            <button className="h-14 w-14 flex grow-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-14 h-14">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div className="flex w-full justify-between h-14 space-x-3">
+                            <div className="grow-0 h-14 w-14 rounded-lg bg-primaryDark animate-pulse"></div>
+                            <div className="grow flex flex-col space-y-2.5 justify-center">
+                                <div className="h-4 w-32 rounded bg-primaryDark animate-pulse"></div>
+                                <div className="h-2 w-24 rounded bg-primaryDark animate-pulse"></div>
+                            </div>
+                            <button className="h-14 w-14 flex grow-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-14 h-14">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                </svg>
+                            </button>
+                        </div>
+                    </>
+}
