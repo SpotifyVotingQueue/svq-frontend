@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { BurgerMenu } from './components/navigation/menuitems/BurgerMenu';
+import { profilePlaceholder } from './components/navigation/menuitems/ProfilePlaceholder';
 
 interface ProviderProps {
     children?: React.ReactNode;
@@ -25,6 +27,16 @@ export interface QueueInformationIF {
 }
 export const QueueInformationContext = React.createContext<QueueInformationIF>({ queueId: undefined, setQueueId: undefined, joinUrl: undefined, setJoinUrl: undefined });
 
+export interface MenuContextIF {
+    left: JSX.Element;
+    setLeft: React.Dispatch<React.SetStateAction<JSX.Element>>;
+    middle?: JSX.Element;
+    setMiddle: React.Dispatch<React.SetStateAction<JSX.Element>>;
+    right: JSX.Element;
+    setRight: React.Dispatch<React.SetStateAction<JSX.Element>>;
+}
+export const MenuContext = React.createContext<MenuContextIF>({ left: <BurgerMenu />, setLeft: undefined as any, middle: undefined, setMiddle: undefined as any, right: profilePlaceholder(), setRight: undefined as any });
+
 export default function Providers(props: ProviderProps) {
 
     function determineIOS(): boolean {
@@ -36,12 +48,18 @@ export default function Providers(props: ProviderProps) {
     const [queueId, setQueueId] = useState(undefined as string | undefined);
     const [joinUrl, setJoinUrl] = useState(undefined as string | undefined);
 
+    const [left, setLeft] = useState(<BurgerMenu />);
+    const [middle, setMiddle] = useState(undefined as any);
+    const [right, setRight] = useState(profilePlaceholder());
+
     return <>
         <DeviceContext.Provider value={{ isIOS: determineIOS() }}>
             <UserContext.Provider value={{ username, setUsername, token, setToken }}>
-                <QueueInformationContext.Provider value={{ queueId, setQueueId, joinUrl, setJoinUrl }}>
-                    {props.children}
-                </QueueInformationContext.Provider>
+                <MenuContext.Provider value={{ left, setLeft, middle, setMiddle, right, setRight }}>
+                    <QueueInformationContext.Provider value={{ queueId, setQueueId, joinUrl, setJoinUrl }}>
+                        {props.children}
+                    </QueueInformationContext.Provider>
+                </MenuContext.Provider>
             </UserContext.Provider>
         </DeviceContext.Provider>
     </>
