@@ -1,20 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useSearchParams } from "react-router-dom";
 import logo from '../../../assets/media/logo.svg';
 import spotify from '../../../assets/media/spotifyFull.svg';
+import { MenuContext, MenuContextIF } from "../../../Providers";
 import { isDebug } from "../../../util/debug/DebugEnv";
 import { userMe } from "../../../util/services/ServiceMethods";
+import ProfilePicture from "../../navigation/menuitems/ProfilePicture";
 
 export default function Login(): JSX.Element {
     let [searchParams] = useSearchParams();
     let navigate = useNavigate();
+
+    let menu: MenuContextIF = useContext(MenuContext);
 
     function login(): void {
         const loginFunc = userMe();
         loginFunc({}).then((res) => {
             console.log(res.data);
             navigate(`/${searchParams.get('redirect')}`);
+            menu.setRight(<ProfilePicture />);
         }).catch(() => {
             console.log("Login failed");
             if (isDebug()) {

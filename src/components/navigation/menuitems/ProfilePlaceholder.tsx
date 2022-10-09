@@ -1,6 +1,18 @@
-export function profilePlaceholder(): JSX.Element {
+import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+
+export default function ProfilePlaceholder(): JSX.Element {
+    let navigate = useNavigate();
+
+    let { pathname } = useLocation();
+
+    function onLogin() {
+        navigate(`/login?redirect=${pathname.slice(1, pathname.length)}`)
+    }
+    
     return <button style={{ height: '5vh', width: '5vh', display: 'flex', marginRight: '2.5vh', marginTop: '2.5vh' }}
-        className="text-primary fill-primaryDark bg-primaryDark rounded-full">
+        className="text-primary fill-primaryDark bg-primaryDark rounded-full"
+        onClick={() => onLogin()}>
         <svg xmlns="http://www.w3.org/2000/svg"
             fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
             className="w-6 h-6" style={{ height: '5vh', width: '5vh'}}>

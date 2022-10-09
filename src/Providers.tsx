@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BurgerMenu } from './components/navigation/menuitems/BurgerMenu';
-import { profilePlaceholder } from './components/navigation/menuitems/ProfilePlaceholder';
+import ProfilePlaceholder from './components/navigation/menuitems/ProfilePlaceholder';
 
 interface ProviderProps {
     children?: React.ReactNode;
@@ -35,7 +35,7 @@ export interface MenuContextIF {
     right: JSX.Element;
     setRight: React.Dispatch<React.SetStateAction<JSX.Element>>;
 }
-export const MenuContext = React.createContext<MenuContextIF>({ left: <BurgerMenu />, setLeft: undefined as any, middle: undefined, setMiddle: undefined as any, right: profilePlaceholder(), setRight: undefined as any });
+export const MenuContext = React.createContext<MenuContextIF>({ left: <BurgerMenu />, setLeft: undefined as any, middle: undefined, setMiddle: undefined as any, right: <ProfilePlaceholder />, setRight: undefined as any });
 
 export default function Providers(props: ProviderProps) {
 
@@ -50,7 +50,7 @@ export default function Providers(props: ProviderProps) {
 
     const [left, setLeft] = useState(<BurgerMenu />);
     const [middle, setMiddle] = useState(undefined as JSX.Element | undefined);
-    const [right, setRight] = useState(profilePlaceholder());
+    const [right, setRight] = useState(<ProfilePlaceholder />);
 
     return <>
         <DeviceContext.Provider value={{ isIOS: determineIOS() }}>
