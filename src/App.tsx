@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import SVQRouter from './SVQRouter';
 import Providers from './Providers';
 import { ping } from './util/services/ServiceMethods';
+import { ApiResponse } from 'openapi-typescript-fetch';
 
 function App() {
 
@@ -9,8 +10,8 @@ function App() {
     const pingFunction = ping();
     pingFunction({}).then((res) => {
       console.log(res.data);
-    }).catch(() => {
-      console.log("Ping failed");
+    }).catch(err => {
+      console.log(err);
     });
   }, [])
 

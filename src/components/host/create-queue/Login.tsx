@@ -15,17 +15,19 @@ export default function Login(): JSX.Element {
     let menu: MenuContextIF = useContext(MenuContext);
 
     function login(): void {
-        const loginFunc = userMe();
-        loginFunc({}).then((res) => {
-            console.log(res.data);
-            navigate(`/${searchParams.get('redirect')}`);
-            menu.setRight(<ProfilePicture />);
-        }).catch(() => {
-            console.log("Login failed");
-            if (isDebug()) {
-                navigate(`/${searchParams.get('redirect')}`);
-            }
-        });
+        // const loginFunc = userMe();
+        // loginFunc({}).then((res) => {
+        //     console.log(res.data);
+        //     navigate(`/${searchParams.get('redirect')}`);
+        //     menu.setRight(<ProfilePicture />);
+        // }).catch(err => {
+        //     console.log(err);
+        //     if (isDebug()) {
+        //         navigate(`/${searchParams.get('redirect')}`);
+        //     }
+        // });
+        window.location.href = "http://localhost:8080/api/v1/login?redirect=http%253A%252F%252Flocalhost%253A3000%252Flogin";
+        //http%253A%252F%252Flocalhost%253A8080%252Flogin%252Foauth2%252F
     }
 
     return <>

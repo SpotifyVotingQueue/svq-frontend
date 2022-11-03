@@ -13,3 +13,7 @@ export function userMe() {
 export function createQueue() {
     return fetcher.path('/api/v1/party').method('post').create();
 }
+
+export function login() {
+    return fetcher.path('/api/v1/login').method('get').create();
+}

@@ -13,8 +13,20 @@ export interface paths {
   "/api/v1/user/me": {
     get: operations["me"];
   };
+  "/api/v1/track/{id}": {
+    get: operations["getTrack"];
+  };
+  "/api/v1/track/{id}/cover": {
+    get: operations["getTrackCover"];
+  };
+  "/api/v1/search/{query}": {
+    get: operations["searchTracks"];
+  };
   "/api/v1/ping": {
     get: operations["ping"];
+  };
+  "/api/v1/login": {
+    get: operations["login"];
   };
 }
 
@@ -83,6 +95,21 @@ export interface components {
     PartyCreatedDto: {
       joinCode?: string;
     };
+    Href: {
+      href?: string;
+    };
+    UserDto: {
+      name?: string;
+      picture?: components["schemas"]["Href"];
+    };
+    TrackDto: {
+      id?: string;
+      name?: string;
+      artists?: string[];
+    };
+    TextDto: {
+      response?: string;
+    };
   };
 }
 
@@ -122,7 +149,56 @@ export interface operations {
       /** OK */
       200: {
         content: {
+          "*/*": components["schemas"]["UserDto"];
+        };
+      };
+    };
+  };
+  getTrack: {
+    parameters: {
+      path: {
+        id: string;
+      };
+    };
+    responses: {
+      /** OK */
+      200: {
+        content: {
+          "*/*": components["schemas"]["TrackDto"];
+        };
+      };
+    };
+  };
+  getTrackCover: {
+    parameters: {
+      path: {
+        id: string;
+      };
+      query: {
+        maxHeight: number;
+        minHeight: number;
+      };
+    };
+    responses: {
+      /** OK */
+      200: {
+        content: {
           "*/*": string;
+        };
+      };
+    };
+  };
+  searchTracks: {
+    parameters: {
+      path: {
+        query: string;
+      };
+    };
+    responses: {
+      /** OK */
+      200: {
+        content: {
+          "*/*": components["schemas"]["TrackDto"][];
         };
       };
     };
@@ -132,7 +208,22 @@ export interface operations {
       /** Server is available - the server responds with "pong". */
       200: {
         content: {
-          "*/*": string;
+          "*/*": components["schemas"]["TextDto"];
+        };
+      };
+    };
+  };
+  login: {
+    parameters: {
+      query: {
+        redirect: string;
+      };
+    };
+    responses: {
+      /** OK */
+      200: {
+        content: {
+          "*/*": { [key: string]: unknown };
         };
       };
     };
