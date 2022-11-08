@@ -1,10 +1,8 @@
 import { Dialog, Transition } from "@headlessui/react";
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
-import { createQueue } from "../../util/services/ServiceMethods";
-import { components } from "../../services-gen/svq-backend";
 import { isDebug } from "../../util/debug/DebugEnv";
-import { MenuContext, MenuContextIF, QueueInformationContext, QueueInformationIF, UserContext, UserContextIF } from "../../Providers";
+import { APIContext, APIContextIF, MenuContext, MenuContextIF, QueueInformationContext, QueueInformationIF, SessionContext, SessionContextIF, UserContext, UserContextIF } from "../../Providers";
 import Playlists from "./playlists/Playlists";
 import ShortQueue from "./queue-short/ShortQueue";
 import Recomendations from "./recomendations/Recomendations";
@@ -18,7 +16,11 @@ export default function Overview() {
     const { id } = useParams();
     let user: UserContextIF = useContext(UserContext);
 
+    let session: SessionContextIF = useContext(SessionContext);
+
     let queueInformation: QueueInformationIF = useContext(QueueInformationContext);
+
+    let api: APIContextIF = useContext(APIContext);
 
     let menu: MenuContextIF = useContext(MenuContext);
 
@@ -34,8 +36,9 @@ export default function Overview() {
     const [qInfoOpen, setQInfoOpen] = useState(false);
     useEffect(() => {
         let debug = isDebug();
-        if ((!user.username || !user.token) && pathname === '/create' && !debug) {
+        if ((!session.token || !session.clientSession) && pathname === '/create' && !debug) {
             navigate(`/login?redirect=create`);
+            return;
         }
 
         if (pathname === "/create") {
@@ -55,14 +58,11 @@ export default function Overview() {
     }, []);
 
     function createNewQueue(debug: boolean): void {
-            let createFunc = createQueue();
-            type PartyCreatedDto = components["schemas"]["PartyCreatedDto"];
-            createFunc({}).then((res) => {
-                let data = res.data as PartyCreatedDto;
-                queueInformation.setQueueId!(data.joinCode);
-                queueInformation.setJoinUrl!(process.env.REACT_APP_APPLICATION_BASE_URL + '/queue/' + data.joinCode);
-                setQInfoOpen(true);
-            }).catch((err) => {
+        api.party.create({ accesscode: session.token! }).then(res => {
+            queueInformation.setQueueId!(res.joinCode);
+            queueInformation.setJoinUrl!(process.env.REACT_APP_APPLICATION_BASE_URL + '/queue/' + res.joinCode);
+            setQInfoOpen(true);
+        }).catch(err => {
                 console.log(err);
                 if (debug) {
                     queueInformation.setQueueId!("debug");

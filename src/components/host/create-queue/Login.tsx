@@ -1,33 +1,37 @@
-import React, { useContext } from "react";
-import { useNavigate, useParams } from "react-router";
+import React, { useContext, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router";
 import { useSearchParams } from "react-router-dom";
 import logo from '../../../assets/media/logo.svg';
 import spotify from '../../../assets/media/spotifyFull.svg';
-import { MenuContext, MenuContextIF } from "../../../Providers";
+import { MenuContext, MenuContextIF, SessionContext, SessionContextIF } from "../../../Providers";
 import { isDebug } from "../../../util/debug/DebugEnv";
-import { userMe } from "../../../util/services/ServiceMethods";
 import ProfilePicture from "../../navigation/menuitems/ProfilePicture";
 
 export default function Login(): JSX.Element {
     let [searchParams] = useSearchParams();
     let navigate = useNavigate();
 
+    let session: SessionContextIF = useContext(SessionContext);
+
     let menu: MenuContextIF = useContext(MenuContext);
 
+    const { pathname } = useLocation();
+    useEffect(() => {
+        if (pathname.includes('login?token=')) {
+            session.setToken(searchParams.get('token')!);
+
+            menu.setRight(<ProfilePicture />);
+
+            navigate(`/${searchParams.get('redirect')}`);
+        }
+    }, []);
+
     function login(): void {
-        // const loginFunc = userMe();
-        // loginFunc({}).then((res) => {
-        //     console.log(res.data);
-        //     navigate(`/${searchParams.get('redirect')}`);
-        //     menu.setRight(<ProfilePicture />);
-        // }).catch(err => {
-        //     console.log(err);
-        //     if (isDebug()) {
-        //         navigate(`/${searchParams.get('redirect')}`);
-        //     }
-        // });
-        window.location.href = "http://localhost:8080/api/v1/login?redirect=http%253A%252F%252Flocalhost%253A3000%252Flogin";
-        //http%253A%252F%252Flocalhost%253A8080%252Flogin%252Foauth2%252F
+        // TODO:    menu.setRight(<ProfilePicture />);
+        if (isDebug()) {
+            navigate(`/${searchParams.get('redirect')}`);
+        }
+        window.location.href = `${process.env.REACT_APP_BACKEND_BASE_URL}/api/v1/login?redirect=${searchParams.get('redirect')}&session=${session.clientSession}`;
     }
 
     return <>
