@@ -17,12 +17,13 @@ export default function Login(): JSX.Element {
 
     const { pathname } = useLocation();
     useEffect(() => {
-        if (pathname.includes('login?token=')) {
-            session.setToken(searchParams.get('token')!);
+        let token = searchParams.get('token')
+        if (token) {
+            session.setToken(token);
 
             menu.setRight(<ProfilePicture />);
 
-            navigate(`/${searchParams.get('redirect')}`);
+            navigate(`/${searchParams.get('redirect')}?token=${token}`);
         }
     }, []);
 

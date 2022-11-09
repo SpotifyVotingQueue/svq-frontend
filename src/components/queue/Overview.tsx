@@ -9,12 +9,14 @@ import Recomendations from "./recomendations/Recomendations";
 import Player from "./player/Player";
 import SearchBar from "../navigation/menuitems/SearchBar";
 import { BurgerMenu } from "../navigation/menuitems/BurgerMenu";
+import { useSearchParams } from "react-router-dom";
 
 export default function Overview() {
     const { pathname } = useLocation();
     let navigate = useNavigate();
     const { id } = useParams();
     let user: UserContextIF = useContext(UserContext);
+    let [searchParams] = useSearchParams();
 
     let session: SessionContextIF = useContext(SessionContext);
 
@@ -36,14 +38,18 @@ export default function Overview() {
     const [qInfoOpen, setQInfoOpen] = useState(false);
     useEffect(() => {
         let debug = isDebug();
-        if ((!session.token || !session.clientSession) && pathname === '/create' && !debug) {
+        let token = searchParams.get('token');
+        if ((!session.token || !session.clientSession) && pathname === '/create' && !debug && !token) {
             navigate(`/login?redirect=create`);
             return;
+        }
+        if (!token) {
+            token = session.token!;
         }
 
         if (pathname === "/create") {
             //Service call to create queue
-            createNewQueue(debug)
+            createNewQueue(debug, token);
         } else if (pathname.startsWith("/queue/")) {
             if (pathname.endsWith('debug')) {
                 //Mock data for debug or load static data
@@ -57,8 +63,8 @@ export default function Overview() {
         menu.setMiddle(<SearchBar />);
     }, []);
 
-    function createNewQueue(debug: boolean): void {
-        api.party.create({ accesscode: session.token! }).then(res => {
+    function createNewQueue(debug: boolean, token: string): void {
+        api.party.create({ accesscode: token }).then(res => {
             queueInformation.setQueueId!(res.joinCode);
             queueInformation.setJoinUrl!(process.env.REACT_APP_APPLICATION_BASE_URL + '/queue/' + res.joinCode);
             setQInfoOpen(true);
