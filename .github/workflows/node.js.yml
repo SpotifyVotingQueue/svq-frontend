@@ -11,6 +11,9 @@ on:
 env:
   HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
   APP_NAME: ${{ 'svq-hipqueue' }}
+  REACT_APP_IS_DEBUG: ${{ false }}
+  ARG REACT_APP_BACKEND_BASE_URL: ${{ 'https://svq-hipqueue.herokuapp.com/backend' }}
+  ARG REACT_APP_APPLICATION_BASE_URL: ${{ 'https://svq-hipqueue.herokuapp.com' }}
 
 jobs:
   build:

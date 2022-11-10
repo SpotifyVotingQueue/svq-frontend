@@ -21,7 +21,7 @@ FROM nginx:latest
 COPY --from=build /app/build /usr/share/nginx/html
 
 COPY ./default.conf /etc/nginx/conf.d/default.conf
-COPY ./proxy.conf /etc/nginx/includes
+COPY ./proxy.conf /etc/nginx/includes/proxy.conf
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
