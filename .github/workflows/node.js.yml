@@ -52,5 +52,5 @@ jobs:
     # Push the Docker image to Heroku Container Registry
     - name: Publish
       run: |
-        heroku container:push web -a $APP_NAME
+        heroku container:push web -a $APP_NAME --build-arg REACT_APP_BACKEND_BASE_URL=$REACT_APP_BACKEND_BASE_URL
         heroku container:release web -a $APP_NAME
