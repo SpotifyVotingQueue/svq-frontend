@@ -1,16 +1,16 @@
 import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import logo from '../../assets/media/logo.svg'
-import { MenuContext, MenuContextIF, UserContext, UserContextIF } from '../../Providers';
+import { MenuContext, MenuContextIF, SessionContext, SessionContextIF, UserContext, UserContextIF } from '../../Providers';
 
 export default function Home(): JSX.Element {
     let navigate = useNavigate();
 
-    let user: UserContextIF = useContext(UserContext);
+    let session: SessionContextIF = useContext(SessionContext);
     let menu: MenuContextIF = useContext(MenuContext);
 
     function onCreateQueue(): void {
-        if (user.username && user.token) {
+        if (session.token && session.clientSession) {
             navigate('/create');
         } else {
             navigate('/login?redirect=create');

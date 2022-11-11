@@ -1,24 +1,28 @@
 import { Dialog, Transition } from "@headlessui/react";
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
-import { createQueue } from "../../util/services/ServiceMethods";
-import { components } from "../../services-gen/svq-backend";
 import { isDebug } from "../../util/debug/DebugEnv";
-import { MenuContext, MenuContextIF, QueueInformationContext, QueueInformationIF, UserContext, UserContextIF } from "../../Providers";
+import { APIContext, APIContextIF, MenuContext, MenuContextIF, QueueInformationContext, QueueInformationIF, SessionContext, SessionContextIF, UserContext, UserContextIF } from "../../Providers";
 import Playlists from "./playlists/Playlists";
 import ShortQueue from "./queue-short/ShortQueue";
 import Recomendations from "./recomendations/Recomendations";
 import Player from "./player/Player";
 import SearchBar from "../navigation/menuitems/SearchBar";
 import { BurgerMenu } from "../navigation/menuitems/BurgerMenu";
+import { useSearchParams } from "react-router-dom";
 
 export default function Overview() {
     const { pathname } = useLocation();
     let navigate = useNavigate();
     const { id } = useParams();
     let user: UserContextIF = useContext(UserContext);
+    let [searchParams] = useSearchParams();
+
+    let session: SessionContextIF = useContext(SessionContext);
 
     let queueInformation: QueueInformationIF = useContext(QueueInformationContext);
+
+    let api: APIContextIF = useContext(APIContext);
 
     let menu: MenuContextIF = useContext(MenuContext);
 
@@ -34,13 +38,18 @@ export default function Overview() {
     const [qInfoOpen, setQInfoOpen] = useState(false);
     useEffect(() => {
         let debug = isDebug();
-        if ((!user.username || !user.token) && pathname === '/create' && !debug) {
+        let token = searchParams.get('token');
+        if ((!session.token || !session.clientSession) && pathname === '/create' && !debug && !token) {
             navigate(`/login?redirect=create`);
+            return;
+        }
+        if (!token) {
+            token = session.token!;
         }
 
         if (pathname === "/create") {
             //Service call to create queue
-            createNewQueue(debug)
+            createNewQueue(debug, token);
         } else if (pathname.startsWith("/queue/")) {
             if (pathname.endsWith('debug')) {
                 //Mock data for debug or load static data
@@ -54,15 +63,12 @@ export default function Overview() {
         menu.setMiddle(<SearchBar />);
     }, []);
 
-    function createNewQueue(debug: boolean): void {
-            let createFunc = createQueue();
-            type PartyCreatedDto = components["schemas"]["PartyCreatedDto"];
-            createFunc({}).then((res) => {
-                let data = res.data as PartyCreatedDto;
-                queueInformation.setQueueId!(data.joinCode);
-                queueInformation.setJoinUrl!(process.env.REACT_APP_APPLICATION_BASE_URL + '/queue/' + data.joinCode);
-                setQInfoOpen(true);
-            }).catch((err) => {
+    function createNewQueue(debug: boolean, token: string): void {
+        api.party.create({ accesscode: token }).then(res => {
+            queueInformation.setQueueId!(res.joinCode);
+            queueInformation.setJoinUrl!(process.env.REACT_APP_APPLICATION_BASE_URL + '/queue/' + res.joinCode);
+            setQInfoOpen(true);
+        }).catch(err => {
                 console.log(err);
                 if (debug) {
                     queueInformation.setQueueId!("debug");

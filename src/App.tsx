@@ -1,18 +1,13 @@
 import React, { useEffect } from 'react';
 import SVQRouter from './SVQRouter';
 import Providers from './Providers';
-import { ping } from './util/services/ServiceMethods';
-import { ApiResponse } from 'openapi-typescript-fetch';
+import { Configuration, TestControllerApi } from './services-gen';
 
 function App() {
 
   useEffect(() => {
-    const pingFunction = ping();
-    pingFunction({}).then((res) => {
-      console.log(res.data);
-    }).catch(err => {
-      console.log(err);
-    });
+    new TestControllerApi(new Configuration({ basePath: process.env.REACT_APP_BACKEND_BASE_URL })).ping()
+      .then(res => console.log(res.response)).catch(err => console.error(err));
   }, [])
 
   return (
