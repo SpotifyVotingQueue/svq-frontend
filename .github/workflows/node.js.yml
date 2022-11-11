@@ -14,7 +14,7 @@ env:
   REACT_APP_IS_DEBUG: ${{ false }}
   REACT_APP_BACKEND_BASE_URL: ${{ 'https://svq-backend.herokuapp.com' }}
   REACT_APP_APPLICATION_BASE_URL: ${{ 'https://svq-hipqueue.herokuapp.com' }}
-
+ 
 jobs:
   build:
 
