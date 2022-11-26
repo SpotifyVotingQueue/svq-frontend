@@ -44,7 +44,7 @@ export interface User1Request {
 }
 
 export interface User2Request {
-    principal: OAuth2User;
+    oAuth2User?: OAuth2User;
 }
 
 export interface User3Request {
@@ -56,7 +56,7 @@ export interface User4Request {
 }
 
 export interface User5Request {
-    oAuth2User?: OAuth2User;
+    principal: OAuth2User;
 }
 
 export interface User6Request {
@@ -165,7 +165,7 @@ export class TestControllerApi extends runtime.BaseAPI {
 
         const response = await this.request({
             path: `/api/v1/user`,
-            method: 'PUT',
+            method: 'PATCH',
             headers: headerParameters,
             query: queryParameters,
             body: OAuth2UserToJSON(requestParameters.oAuth2User),
@@ -192,7 +192,7 @@ export class TestControllerApi extends runtime.BaseAPI {
 
         const response = await this.request({
             path: `/api/v1/user`,
-            method: 'PATCH',
+            method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: OAuth2UserToJSON(requestParameters.oAuth2User),
@@ -211,23 +211,18 @@ export class TestControllerApi extends runtime.BaseAPI {
     /**
      */
     async user2Raw(requestParameters: User2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: object; }>> {
-        if (requestParameters.principal === null || requestParameters.principal === undefined) {
-            throw new runtime.RequiredError('principal','Required parameter requestParameters.principal was null or undefined when calling user2.');
-        }
-
         const queryParameters: any = {};
-
-        if (requestParameters.principal !== undefined) {
-            queryParameters['principal'] = requestParameters.principal;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+        headerParameters['Content-Type'] = 'application/json';
+
         const response = await this.request({
             path: `/api/v1/user`,
-            method: 'GET',
+            method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
+            body: OAuth2UserToJSON(requestParameters.oAuth2User),
         }, initOverrides);
 
         return new runtime.JSONApiResponse<any>(response);
@@ -235,7 +230,7 @@ export class TestControllerApi extends runtime.BaseAPI {
 
     /**
      */
-    async user2(requestParameters: User2Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: object; }> {
+    async user2(requestParameters: User2Request = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: object; }> {
         const response = await this.user2Raw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -251,7 +246,7 @@ export class TestControllerApi extends runtime.BaseAPI {
 
         const response = await this.request({
             path: `/api/v1/user`,
-            method: 'DELETE',
+            method: 'OPTIONS',
             headers: headerParameters,
             query: queryParameters,
             body: OAuth2UserToJSON(requestParameters.oAuth2User),
@@ -278,7 +273,7 @@ export class TestControllerApi extends runtime.BaseAPI {
 
         const response = await this.request({
             path: `/api/v1/user`,
-            method: 'OPTIONS',
+            method: 'HEAD',
             headers: headerParameters,
             query: queryParameters,
             body: OAuth2UserToJSON(requestParameters.oAuth2User),
@@ -297,18 +292,23 @@ export class TestControllerApi extends runtime.BaseAPI {
     /**
      */
     async user5Raw(requestParameters: User5Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: object; }>> {
+        if (requestParameters.principal === null || requestParameters.principal === undefined) {
+            throw new runtime.RequiredError('principal','Required parameter requestParameters.principal was null or undefined when calling user5.');
+        }
+
         const queryParameters: any = {};
+
+        if (requestParameters.principal !== undefined) {
+            queryParameters['principal'] = requestParameters.principal;
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        headerParameters['Content-Type'] = 'application/json';
-
         const response = await this.request({
             path: `/api/v1/user`,
-            method: 'POST',
+            method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-            body: OAuth2UserToJSON(requestParameters.oAuth2User),
         }, initOverrides);
 
         return new runtime.JSONApiResponse<any>(response);
@@ -316,7 +316,7 @@ export class TestControllerApi extends runtime.BaseAPI {
 
     /**
      */
-    async user5(requestParameters: User5Request = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: object; }> {
+    async user5(requestParameters: User5Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: object; }> {
         const response = await this.user5Raw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -332,7 +332,7 @@ export class TestControllerApi extends runtime.BaseAPI {
 
         const response = await this.request({
             path: `/api/v1/user`,
-            method: 'HEAD',
+            method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: OAuth2UserToJSON(requestParameters.oAuth2User),

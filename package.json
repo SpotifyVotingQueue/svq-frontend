@@ -25,7 +25,8 @@
     "debug": "env-cmd -f ./.env.debug react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "generate-service": "java -jar ./openapi/openapi-generator-cli-6.2.1.jar generate -i ./openapi/svq-backend.json -o src/services-gen -g typescript-fetch"
+    "generate-service-local": "java -jar ./openapi/openapi-generator-cli-6.2.1.jar generate -i ./openapi/svq-backend.json -o src/services-gen -g typescript-fetch",
+    "generate-service": "java -jar ./openapi/openapi-generator-cli-6.2.1.jar generate -i https://svq-backend.herokuapp.com/api/v1/api-docs -o src/services-gen -g typescript-fetch"
   },
   "eslintConfig": {
     "extends": [
