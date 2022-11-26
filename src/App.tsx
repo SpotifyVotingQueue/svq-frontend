@@ -6,6 +6,7 @@ import { Configuration, TestControllerApi } from './services-gen';
 function App() {
 
   useEffect(() => {
+    console.log(process.env.REACT_APP_BACKEND_BASE_URL);
     new TestControllerApi(new Configuration({ basePath: process.env.REACT_APP_BACKEND_BASE_URL })).ping()
       .then(res => console.log(res.response)).catch(err => console.error(err));
   }, [])
