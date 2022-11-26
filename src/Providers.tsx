@@ -52,6 +52,12 @@ export interface SessionContextIF {
 }
 export const SessionContext = React.createContext<SessionContextIF>({ token: undefined, setToken: undefined as any, clientSession: undefined as any });
 
+export interface SearchContextIF {
+    searchQuery?: string;
+    setSearchQuery: React.Dispatch<React.SetStateAction<string | undefined>>;
+}
+export const SearchContext = React.createContext<SearchContextIF>({ searchQuery: undefined , setSearchQuery: undefined as any });
+
 export default function Providers(props: ProviderProps) {
 
     function determineIOS(): boolean {
@@ -69,6 +75,8 @@ export default function Providers(props: ProviderProps) {
     const [middle, setMiddle] = useState(undefined as JSX.Element | undefined);
     const [right, setRight] = useState(<ProfilePlaceholder />);
 
+    const [searchQuery, setSearchQuery] = useState(undefined as string | undefined);
+
     return <>
         <DeviceContext.Provider value={{ isIOS: determineIOS() }}>
             <APIContext.Provider value={{ oauth: new OAuthControllerApi(configuration), party: new PartyControllerApi(configuration), test: new TestControllerApi(configuration), track: new TrackControllerApi(configuration) }}>
@@ -76,7 +84,9 @@ export default function Providers(props: ProviderProps) {
                     <UserContext.Provider value={{ username, setUsername }}>
                         <MenuContext.Provider value={{ left, setLeft, middle, setMiddle, right, setRight }}>
                             <QueueInformationContext.Provider value={{ queueId, setQueueId, joinUrl, setJoinUrl }}>
-                                {props.children}
+                                <SearchContext.Provider value={{ searchQuery, setSearchQuery }}>
+                                    {props.children}
+                                </SearchContext.Provider>
                             </QueueInformationContext.Provider>
                         </MenuContext.Provider>
                     </UserContext.Provider>

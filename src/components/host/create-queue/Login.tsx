@@ -31,6 +31,7 @@ export default function Login(): JSX.Element {
         // TODO:    menu.setRight(<ProfilePicture />);
         if (isDebug()) {
             navigate(`/${searchParams.get('redirect')}`);
+            return;
         }
         window.location.href = `${process.env.REACT_APP_BACKEND_BASE_URL}/api/v1/login?redirect=${searchParams.get('redirect')}&session=${session.clientSession}`;
     }

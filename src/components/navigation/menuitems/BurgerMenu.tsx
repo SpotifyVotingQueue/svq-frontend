@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { MenuButton } from "../../../util/widgets/Buttons";
 import { MenuItem } from "../Menu";
 import { useNavigate } from "react-router-dom";
 import { isDebug } from "../../../util/debug/DebugEnv";
+import { SessionContext, SessionContextIF, UserContext, UserContextIF } from "../../../Providers";
 
 export function BurgerMenu(): JSX.Element {
     let navigate = useNavigate();
+
+    const session: SessionContextIF = useContext(SessionContext);
 
     function navigateMenu(item: MenuItem): void {
         navigate(item.path);
@@ -30,8 +33,7 @@ export function BurgerMenu(): JSX.Element {
 
     useEffect(() => {
         const setMenuOptions = async () => {
-            //TODO: implement user provider
-            if (false /*user.isLoggedIn*/) {
+            if (session.token) {
                 setMenuList([
                     ...menuList,
                     {
@@ -52,7 +54,7 @@ export function BurgerMenu(): JSX.Element {
             }
         };
         setMenuOptions();
-    }, [])
+    }, [session.token]);
 
     return <Popover className="relative">
                     <Popover.Button>

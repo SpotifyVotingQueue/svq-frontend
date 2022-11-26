@@ -34,6 +34,7 @@ export interface GetTrackCoverRequest {
 
 export interface SearchTracksRequest {
     query: string;
+    partyId: string;
 }
 
 /**
@@ -125,7 +126,15 @@ export class TrackControllerApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('query','Required parameter requestParameters.query was null or undefined when calling searchTracks.');
         }
 
+        if (requestParameters.partyId === null || requestParameters.partyId === undefined) {
+            throw new runtime.RequiredError('partyId','Required parameter requestParameters.partyId was null or undefined when calling searchTracks.');
+        }
+
         const queryParameters: any = {};
+
+        if (requestParameters.partyId !== undefined) {
+            queryParameters['partyId'] = requestParameters.partyId;
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 

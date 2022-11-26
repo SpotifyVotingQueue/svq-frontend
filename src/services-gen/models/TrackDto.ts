@@ -37,6 +37,12 @@ export interface TrackDto {
      * @memberof TrackDto
      */
     artists?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackDto
+     */
+    coverUrl?: string;
 }
 
 /**
@@ -61,6 +67,7 @@ export function TrackDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'id': !exists(json, 'id') ? undefined : json['id'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'artists': !exists(json, 'artists') ? undefined : json['artists'],
+        'coverUrl': !exists(json, 'coverUrl') ? undefined : json['coverUrl'],
     };
 }
 
@@ -76,6 +83,7 @@ export function TrackDtoToJSON(value?: TrackDto | null): any {
         'id': value.id,
         'name': value.name,
         'artists': value.artists,
+        'coverUrl': value.coverUrl,
     };
 }
 

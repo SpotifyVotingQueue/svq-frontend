@@ -14,7 +14,6 @@ import { useSearchParams } from "react-router-dom";
 export default function Overview() {
     const { pathname } = useLocation();
     let navigate = useNavigate();
-    const { id } = useParams();
     let user: UserContextIF = useContext(UserContext);
     let [searchParams] = useSearchParams();
 
@@ -34,6 +33,8 @@ export default function Overview() {
     const [recomendations, setRecomendations] = useState(undefined);
     const [currentSong, setCurrentSong] = useState(undefined as string | undefined); //TODO: add type
 
+    const [searchQuery, setSearchQuery] = useState(undefined as string | undefined);
+
 
     const [qInfoOpen, setQInfoOpen] = useState(false);
     useEffect(() => {
@@ -48,7 +49,6 @@ export default function Overview() {
         }
 
         if (pathname === "/create") {
-            //Service call to create queue
             createNewQueue(debug, token);
         } else if (pathname.startsWith("/queue/")) {
             if (pathname.endsWith('debug')) {
@@ -69,7 +69,7 @@ export default function Overview() {
             queueInformation.setJoinUrl!(process.env.REACT_APP_APPLICATION_BASE_URL + '/queue/' + res.joinCode);
             setQInfoOpen(true);
         }).catch(err => {
-                console.log(err);
+                console.error(err);
                 if (debug) {
                     queueInformation.setQueueId!("debug");
                     queueInformation.setJoinUrl!("https://hipqueue.de/join/debug");
