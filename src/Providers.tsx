@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BurgerMenu } from './components/navigation/menuitems/BurgerMenu';
 import ProfilePlaceholder from './components/navigation/menuitems/ProfilePlaceholder';
-import { Configuration, OAuthControllerApi, PartyControllerApi, TestControllerApi, TrackControllerApi, TrackDto } from './services-gen';
+import { Configuration, OAuthControllerApi, PartyControllerApi, PlaylistControllerApi, TestControllerApi, TrackControllerApi, TrackDto } from './services-gen';
 import { v4 as uuidv4 } from 'uuid';
 
 interface ProviderProps {
@@ -42,8 +42,9 @@ export interface APIContextIF {
     party: PartyControllerApi;
     test: TestControllerApi;
     track: TrackControllerApi;
+    playlists: PlaylistControllerApi;
 }
-export const APIContext = React.createContext<APIContextIF>({ oauth: undefined as any, party: undefined as any, test: undefined as any, track: undefined as any });
+export const APIContext = React.createContext<APIContextIF>({ oauth: undefined as any, party: undefined as any, test: undefined as any, track: undefined as any, playlists: undefined as any });
 
 export interface SessionContextIF {
     token?: string;
@@ -79,7 +80,7 @@ export default function Providers(props: ProviderProps) {
 
     return <>
         <DeviceContext.Provider value={{ isIOS: determineIOS() }}>
-            <APIContext.Provider value={{ oauth: new OAuthControllerApi(configuration), party: new PartyControllerApi(configuration), test: new TestControllerApi(configuration), track: new TrackControllerApi(configuration) }}>
+            <APIContext.Provider value={{ oauth: new OAuthControllerApi(configuration), party: new PartyControllerApi(configuration), test: new TestControllerApi(configuration), track: new TrackControllerApi(configuration), playlists: new PlaylistControllerApi(configuration) }}>
                 <SessionContext.Provider value={{ token: token, setToken: setToken, clientSession: uuidv4() }}>
                     <UserContext.Provider value={{ username, setUsername }}>
                         <MenuContext.Provider value={{ left, setLeft, middle, setMiddle, right, setRight }}>

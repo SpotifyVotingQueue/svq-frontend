@@ -10,6 +10,7 @@ import Player from "./player/Player";
 import SearchBar from "../navigation/menuitems/SearchBar";
 import { BurgerMenu } from "../navigation/menuitems/BurgerMenu";
 import { useSearchParams } from "react-router-dom";
+import { PlaylistDto } from "../../services-gen";
 
 export default function Overview() {
     const { pathname } = useLocation();
@@ -28,7 +29,7 @@ export default function Overview() {
     const [bTextID, setBTextID] = useState("Kopieren");
     const [bTextURL, setBTextURL] = useState("Kopieren");
 
-    const [playlists, setPlaylists] = useState(undefined);
+    const [playlists, setPlaylists] = useState(undefined as PlaylistDto[] | undefined);
     const [queue, setQueue] = useState(undefined);
     const [recomendations, setRecomendations] = useState(undefined);
     const [currentSong, setCurrentSong] = useState(undefined as string | undefined); //TODO: add type
@@ -57,7 +58,11 @@ export default function Overview() {
             } else {
                 //Load queue data from server
             }
+            queueInformation.setQueueId!(pathname.split("/")[2]);
         }
+        api.playlists.getPlaylists({ partyId: queueInformation.queueId as string }).then((res: PlaylistDto[]) => {
+            setPlaylists(res);
+        });
 
         menu.setLeft(<BurgerMenu />)
         menu.setMiddle(<SearchBar />);
