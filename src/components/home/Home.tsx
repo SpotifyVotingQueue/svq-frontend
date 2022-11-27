@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import logo from '../../assets/media/logo.svg'
-import { MenuContext, MenuContextIF, SessionContext, SessionContextIF, UserContext, UserContextIF } from '../../Providers';
+import { MenuContext, MenuContextIF, SessionContext, SessionContextIF } from '../../Providers';
 
 export default function Home(): JSX.Element {
     let navigate = useNavigate();
