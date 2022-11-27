@@ -11,6 +11,7 @@ export * from './OAuth2AuthorizedClient';
 export * from './OAuth2RefreshToken';
 export * from './OAuth2User';
 export * from './PartyCreatedDto';
+export * from './PlaylistDto';
 export * from './ProviderDetails';
 export * from './TextDto';
 export * from './TokenType';

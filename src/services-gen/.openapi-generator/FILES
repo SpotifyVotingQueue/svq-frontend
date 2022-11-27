@@ -1,5 +1,6 @@
 apis/OAuthControllerApi.ts
 apis/PartyControllerApi.ts
+apis/PlaylistControllerApi.ts
 apis/TestControllerApi.ts
 apis/TrackControllerApi.ts
 apis/index.ts
@@ -15,6 +16,7 @@ models/OAuth2AuthorizedClient.ts
 models/OAuth2RefreshToken.ts
 models/OAuth2User.ts
 models/PartyCreatedDto.ts
+models/PlaylistDto.ts
 models/ProviderDetails.ts
 models/TextDto.ts
 models/TokenType.ts
