@@ -10,7 +10,7 @@ import Player from "./player/Player";
 import SearchBar from "../navigation/menuitems/SearchBar";
 import { BurgerMenu } from "../navigation/menuitems/BurgerMenu";
 import { useSearchParams } from "react-router-dom";
-import { PlaylistDto } from "../../services-gen";
+import { PartyCreatedDto, PlaylistDto } from "../../services-gen";
 
 export default function Overview() {
     const { pathname } = useLocation();
@@ -48,9 +48,9 @@ export default function Overview() {
         if (!token) {
             token = session.token!;
         }
-
+        let partyId: string = "";
         if (pathname === "/create") {
-            createNewQueue(debug, token);
+            partyId = createNewQueue(debug, token) as string;
         } else if (pathname.startsWith("/queue/")) {
             if (pathname.endsWith('debug')) {
                 //Mock data for debug or load static data
@@ -58,9 +58,10 @@ export default function Overview() {
             } else {
                 //Load queue data from server
             }
-            queueInformation.setQueueId!(pathname.split("/")[2]);
+            partyId = pathname.split("/")[2];
+            queueInformation.setQueueId!(partyId);
         }
-        api.playlists.getPlaylists({ partyId: queueInformation.queueId as string }).then((res: PlaylistDto[]) => {
+        api.playlists.getPlaylists({ partyId: partyId }).then((res: PlaylistDto[]) => {
             setPlaylists(res);
         });
 
@@ -68,20 +69,24 @@ export default function Overview() {
         menu.setMiddle(<SearchBar />);
     }, []);
 
-    function createNewQueue(debug: boolean, token: string): void {
-        api.party.create({ accesscode: token }).then(res => {
+    function createNewQueue(debug: boolean, token: string): string | undefined {
+        try {
+            const res: PartyCreatedDto = await api.party.create({ accesscode: token })
             queueInformation.setQueueId!(res.joinCode);
             queueInformation.setJoinUrl!(process.env.REACT_APP_APPLICATION_BASE_URL + '/queue/' + res.joinCode);
             setQInfoOpen(true);
-        }).catch(err => {
-                console.error(err);
-                if (debug) {
-                    queueInformation.setQueueId!("debug");
-                    queueInformation.setJoinUrl!("https://hipqueue.de/join/debug");
-                    setQInfoOpen(true);
-                }
-                //TODO: Error handling
-            });
+            return res.joinCode;
+        }
+        catch (err) {
+            console.error(err);
+            if (debug) {
+                queueInformation.setQueueId!("debug");
+                queueInformation.setJoinUrl!("https://hipqueue.de/join/debug");
+                setQInfoOpen(true);
+            }
+            //TODO: Error handling
+            return undefined;
+        }
     }
 
     function switch2Queue() {
