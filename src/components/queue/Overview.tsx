@@ -39,37 +39,40 @@ export default function Overview() {
 
     const [qInfoOpen, setQInfoOpen] = useState(false);
     useEffect(() => {
-        let debug = isDebug();
-        let token = searchParams.get('token');
-        if ((!session.token || !session.clientSession) && pathname === '/create' && !debug && !token) {
-            navigate(`/login?redirect=create`);
-            return;
-        }
-        if (!token) {
-            token = session.token!;
-        }
-        let partyId: string = "";
-        if (pathname === "/create") {
-            partyId = createNewQueue(debug, token) as string;
-        } else if (pathname.startsWith("/queue/")) {
-            if (pathname.endsWith('debug')) {
-                //Mock data for debug or load static data
-                setCurrentSong("undefined");
-            } else {
-                //Load queue data from server
+        async function initOverview () {
+            let debug = isDebug();
+            let token = searchParams.get('token');
+            if ((!session.token || !session.clientSession) && pathname === '/create' && !debug && !token) {
+                navigate(`/login?redirect=create`);
+                return;
             }
-            partyId = pathname.split("/")[2];
-            queueInformation.setQueueId!(partyId);
-        }
-        api.playlists.getPlaylists({ partyId: partyId }).then((res: PlaylistDto[]) => {
-            setPlaylists(res);
-        });
+            if (!token) {
+                token = session.token!;
+            }
+            let partyId: string = "";
+            if (pathname === "/create") {
+                partyId = await createNewQueue(debug, token) as string;
+            } else if (pathname.startsWith("/queue/")) {
+                if (pathname.endsWith('debug')) {
+                    //Mock data for debug or load static data
+                    setCurrentSong("undefined");
+                } else {
+                    //Load queue data from server
+                }
+                partyId = pathname.split("/")[2];
+                queueInformation.setQueueId!(partyId);
+            }
+            api.playlists.getPlaylists({ partyId: partyId }).then((res: PlaylistDto[]) => {
+                setPlaylists(res);
+            });
 
-        menu.setLeft(<BurgerMenu />)
-        menu.setMiddle(<SearchBar />);
+            menu.setLeft(<BurgerMenu />)
+            menu.setMiddle(<SearchBar />);
+        }
+        initOverview();
     }, []);
 
-    function createNewQueue(debug: boolean, token: string): string | undefined {
+    async function createNewQueue(debug: boolean, token: string): Promise<string | undefined> {
         try {
             const res: PartyCreatedDto = await api.party.create({ accesscode: token })
             queueInformation.setQueueId!(res.joinCode);
