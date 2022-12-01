@@ -1,56 +1,115 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { PlaylistDto } from "../../../services-gen";
 import { playlistSkeleton } from "../../../util/widgets/Skeletons";
 
 export interface PlaylistsProps {
-  playlists: PlaylistDto[] | undefined;
+	playlists: PlaylistDto[] | undefined;
 }
 
 export default function Playlists(props: PlaylistsProps) {
+	const [rows, setRows] = useState(Array<JSX.Element>());
 
+	function splitReverse(str: string): string[] {
+		let rep: string[];
+		let range: number = 3;
+		do {
+			const reversed = str.split("").reverse().join("");
+			const index = reversed.indexOf(" ", range);
+			const reversedArray = [
+				reversed.slice(0, index),
+				reversed.slice(index + 1),
+			];
+			rep = reversedArray
+				.map((s) =>
+					s.length > 11
+						? s.split("").reverse().join("")
+						: s.split("").reverse().join("").slice(0, 11)
+				)
+				.reverse();
+			range++;
+		} while (rep[0].length > 11);
+		return rep;
+	}
 
-    return <div className="min-h-screen-20 mx-5 mt-7 flex flex-col">
-                <h1 className="text-2xl text-primary font-roboto mb-2">Deine Playlists</h1>
-                {props.playlists ? 
-                    <div className="grow flex flex-col justify-between">
-                        <div className="flex h-0.45 justify-between">
-                            <div className="flex w-0.45 h-full bg-bgPlaylist rounded-lg">
-                                <img className="w-1/3 h-full rounded-lg" src={props.playlists[0].cover?.href} alt="Cover"></img>
-                                <div className="flex flex-col w-2/3 h-full">
-                                    <p className="w-1/2 h-3 mt-2 ml-2 font-bold">{props.playlists[0].name}</p>
-                                    <p className="w-1/3 h-3 mt-2 ml-2">{props.playlists[0].numberTracks} Tracks</p>
-                                    <p className="w-2/5 h-2 mt-2 ml-2">By {props.playlists[0].owner}</p>
-                                </div>
-                            </div>
-                            <div className="flex w-0.45 h-full bg-bgPlaylist rounded-lg">
-                                <img className="w-1/3 h-full rounded-lg" src={props.playlists[1].cover?.href} alt="Cover"></img>
-                                <div className="flex flex-col w-2/3 h-full">
-                                    <p className="w-1/2 h-3 mt-2 ml-2 font-bold">{props.playlists[1].name}</p>
-                                    <p className="w-1/3 h-3 mt-2 ml-2">{props.playlists[1].numberTracks} Tracks</p>
-                                    <p className="w-2/5 h-2 mt-2 ml-2">By {props.playlists[1].owner}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flex h-0.45 justify-between">
-                            <div className="flex w-0.45 h-full bg-bgPlaylist rounded-lg">
-                                <img className="w-1/3 h-full rounded-lg" src={props.playlists[2].cover?.href} alt="Cover"></img>
-                                <div className="flex flex-col w-2/3 h-full">
-                                    <p className="w-1/2 h-3 mt-2 ml-2 font-bold">{props.playlists[2].name}</p>
-                                    <p className="w-1/3 h-3 mt-2 ml-2">{props.playlists[2].numberTracks} Tracks</p>
-                                    <p className="w-2/5 h-2 mt-2 ml-2">By {props.playlists[2].owner}</p>
-                                </div>
-                            </div>
-                            <div className="flex w-0.45 h-full bg-bgPlaylist rounded-lg">
-                                <img className="w-1/3 h-full rounded-lg" src={props.playlists[3].cover?.href} alt="Cover"></img>
-                                <div className="flex flex-col w-2/3 h-full">
-                                    <p className="w-1/2 h-3 mt-2 ml-2 font-bold">{props.playlists[3].name}</p>
-                                    <p className="w-1/3 h-3 mt-2 ml-2">{props.playlists[3].numberTracks} Tracks</p>
-                                    <p className="w-2/5 h-2 mt-2 ml-2">By {props.playlists[3].owner}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    : playlistSkeleton()
-                }
-            </div>
+	function openPlaylist(playlist: PlaylistDto) {
+		// TODO: Open playlist
+	}
+
+	useEffect(() => {
+		if (props.playlists) {
+			setRows([]);
+			for (let i: number = 0; i < props.playlists.length; i += 2) {
+				const playlist1: PlaylistDto = props.playlists[i];
+				const playlist2: PlaylistDto = props.playlists[i + 1];
+				setRows((rows) => [
+					...rows,
+					<div className="flex h-0.45 justify-between">
+						<div
+							onClick={() => openPlaylist(playlist1)}
+							className="flex w-0.45 h-full bg-bgPlaylist rounded-lg"
+						>
+							<img
+								className="w-1/3 h-full rounded-lg"
+								src={playlist1.cover?.href}
+								alt="Cover"
+							></img>
+							<div className="flex flex-col w-2/3 h-full">
+								<p className="w-full h-3 mx-2 font-bold">
+									{playlist1.name!.length > 11
+										? splitReverse(playlist1.name!)[0]
+										: playlist1.name}
+								</p>
+								{playlist1.name!.length > 11 && (
+									<p className="w-full h-3 mt-1 mx-2 font-bold">
+										{splitReverse(playlist1.name!)[1]}
+									</p>
+								)}
+								<p className="w-full h-2 mt-2 ml-2">
+									{"By " + playlist1.owner}
+								</p>
+							</div>
+						</div>
+						<div
+							onClick={() => openPlaylist(playlist2)}
+							className="flex w-0.45 h-full bg-bgPlaylist rounded-lg"
+						>
+							<img
+								className="w-1/3 h-full rounded-lg"
+								src={playlist2.cover?.href}
+								alt="Cover"
+							></img>
+							<div className="flex flex-col w-2/3 h-full">
+								<p className="w-full h-3 mx-2 font-bold">
+									{playlist2.name!.length > 11
+										? splitReverse(playlist2.name!)[0]
+										: playlist2.name}
+								</p>
+								{playlist2.name!.length > 11 && (
+									<p className="w-full h-3 mt-1 mx-2 font-bold">
+										{splitReverse(playlist2.name!)[1]}
+									</p>
+								)}
+								<p className="w-full h-2 mt-2 ml-2">
+									{"By " + playlist2.owner}
+								</p>
+							</div>
+						</div>
+					</div>,
+				]);
+			}
+		}
+	}, [props.playlists]);
+
+	return (
+		<div className="min-h-screen-20 mx-5 mt-7 flex flex-col">
+			<h1 className="text-2xl text-primary font-roboto mb-2">
+				Deine Playlists
+			</h1>
+			{props.playlists ? (
+				<div className="grow flex flex-col justify-between">{rows}</div>
+			) : (
+				playlistSkeleton()
+			)}
+		</div>
+	);
 }
