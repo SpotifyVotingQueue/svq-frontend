@@ -1,9 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import {
+	APIContext,
+	APIContextIF,
 	MenuContext,
 	MenuContextIF,
 	SearchContext,
 	SearchContextIF,
+	QueueInformationIF,
+	QueueInformationContext,
 } from "../../Providers";
 import { TrackDto } from "../../services-gen";
 import { resultsSkeleton } from "../../util/widgets/Skeletons";
@@ -13,6 +17,8 @@ export default function Search(): JSX.Element {
 	let menu: MenuContextIF = useContext(MenuContext);
 
 	const search: SearchContextIF = useContext(SearchContext);
+	const api: APIContextIF = useContext(APIContext);
+	const queue: QueueInformationIF = useContext(QueueInformationContext);
 
 	const [rows, setRows] = useState(Array<JSX.Element>());
 
@@ -20,7 +26,9 @@ export default function Search(): JSX.Element {
 		menu.setLeft(<BackButton />);
 	}, []);
 
-	function addToQueue(track: TrackDto) {}
+	function addToQueue(track: TrackDto) {
+		api.party.addTrackToQueue({ id: queue.queueId!, trackId: track.id! });
+	}
 
 	useEffect(() => {
 		setRows([]);
