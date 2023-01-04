@@ -32,6 +32,9 @@ export default function Search(): JSX.Element {
 
 	useEffect(() => {
 		setRows([]);
+		if (search.result === undefined) {
+			return;
+		}
 		for (const result of search.result!) {
 			setRows((rows) => [
 				...rows,

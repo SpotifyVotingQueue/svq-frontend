@@ -10,7 +10,6 @@ export default function Playlists(props: PlaylistsProps) {
 	const [rows, setRows] = useState(Array<JSX.Element>());
 
 	function splitReverse(str: string): string[] {
-		console.log("input", str);
 		let rep: string[];
 		let range: number = 3;
 		do {
@@ -33,7 +32,6 @@ export default function Playlists(props: PlaylistsProps) {
 				.reverse();
 			range++;
 		} while (rep[0].length > 12);
-		console.log("output", rep);
 		return rep.map((s) =>
 			s.length > 12 ? s.slice(0, 10).concat("...") : s
 		);
