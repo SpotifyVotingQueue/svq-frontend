@@ -5,6 +5,7 @@ apis/TestControllerApi.ts
 apis/TrackControllerApi.ts
 apis/index.ts
 index.ts
+models/AddTrackResponseDto.ts
 models/AuthenticationMethod.ts
 models/AuthorizationGrantType.ts
 models/ClientAuthenticationMethod.ts

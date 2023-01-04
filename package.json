@@ -17,6 +17,7 @@
     "react-router-dom": "^6.4.0",
     "react-scripts": "5.0.1",
     "typescript": "^4.8.3",
+    "usehooks-ts": "^2.9.1",
     "uuid": "^9.0.0",
     "web-vitals": "^2.1.4"
   },
@@ -26,7 +27,7 @@
     "debug": "env-cmd -f ./.env.debug react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "generate-service-local": "java -jar ./openapi/openapi-generator-cli-6.2.1.jar generate -i ./openapi/svq-backend.json -o src/services-gen -g typescript-fetch",
+    "generate-service-local": "java -jar ./openapi/openapi-generator-cli-6.2.1.jar generate -i http://localhost:8080/api/v1/api-docs -o src/services-gen -g typescript-fetch",
     "generate-service": "java -jar ./openapi/openapi-generator-cli-6.2.1.jar generate -i https://svq-backend.herokuapp.com/api/v1/api-docs -o src/services-gen -g typescript-fetch"
   },
   "eslintConfig": {

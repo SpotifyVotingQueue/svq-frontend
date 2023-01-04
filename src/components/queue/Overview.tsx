@@ -220,7 +220,7 @@ export default function Overview() {
 					</Dialog>
 				</Transition>
 				<Playlists playlists={playlists} />
-				<ShortQueue queue={queue} />
+				<ShortQueue partyId={queueInformation.queueId as string} />
 				<Recomendations recomendations={recomendations} />
 			</div>
 			<Player currentSong={currentSong} />

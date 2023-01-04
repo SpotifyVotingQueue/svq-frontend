@@ -9,7 +9,7 @@ import {
 	QueueInformationIF,
 	QueueInformationContext,
 } from "../../Providers";
-import { TrackDto } from "../../services-gen";
+import { AddTrackResponseDto, TrackDto } from "../../services-gen";
 import { resultsSkeleton } from "../../util/widgets/Skeletons";
 import BackButton from "../navigation/menuitems/BackButton";
 
@@ -27,7 +27,13 @@ export default function Search(): JSX.Element {
 	}, []);
 
 	function addToQueue(track: TrackDto) {
-		api.party.addTrackToQueue({ id: queue.queueId!, trackId: track.id! });
+		api.party
+			.addTrackToQueue({ id: queue.queueId!, trackId: track.id! })
+			.then((res: AddTrackResponseDto) => {
+				if (res.newTrackAdded) {
+					//todo do something
+				}
+			});
 	}
 
 	useEffect(() => {
@@ -45,7 +51,11 @@ export default function Search(): JSX.Element {
 						className="grow-0 h-14 w-14 rounded-lg"
 					></img>
 					<div className="grow flex flex-col space-y-2.5 justify-center">
-						<p className="w-full h-4 font-bold">{result.name}</p>
+						<p className="w-full h-4 font-bold">
+							{result.name!.length > 30
+								? result.name?.slice(0, 28).concat("...")
+								: result.name}
+						</p>
 						<p className="h-2 w-full rounded text-sm">
 							{result.artists?.join(", ")}
 						</p>

@@ -15,10 +15,13 @@
 
 import * as runtime from '../runtime';
 import type {
+  AddTrackResponseDto,
   PartyCreatedDto,
   TrackDto,
 } from '../models';
 import {
+    AddTrackResponseDtoFromJSON,
+    AddTrackResponseDtoToJSON,
     PartyCreatedDtoFromJSON,
     PartyCreatedDtoToJSON,
     TrackDtoFromJSON,
@@ -55,7 +58,7 @@ export class PartyControllerApi extends runtime.BaseAPI {
 
     /**
      */
-    async addTrackToQueueRaw(requestParameters: AddTrackToQueueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addTrackToQueueRaw(requestParameters: AddTrackToQueueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AddTrackResponseDto>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling addTrackToQueue.');
         }
@@ -75,13 +78,14 @@ export class PartyControllerApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.VoidApiResponse(response);
+        return new runtime.JSONApiResponse(response, (jsonValue) => AddTrackResponseDtoFromJSON(jsonValue));
     }
 
     /**
      */
-    async addTrackToQueue(requestParameters: AddTrackToQueueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.addTrackToQueueRaw(requestParameters, initOverrides);
+    async addTrackToQueue(requestParameters: AddTrackToQueueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AddTrackResponseDto> {
+        const response = await this.addTrackToQueueRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
     /**

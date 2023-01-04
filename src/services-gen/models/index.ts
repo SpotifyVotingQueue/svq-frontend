@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+export * from './AddTrackResponseDto';
 export * from './AuthenticationMethod';
 export * from './AuthorizationGrantType';
 export * from './ClientAuthenticationMethod';
