@@ -42,8 +42,13 @@ export interface DownvoteTrackRequest {
     trackId: string;
 }
 
+export interface GetLockedTrackRequest {
+    id: string;
+}
+
 export interface GetQueueRequest {
     id: string;
+    withoutLocked?: string;
 }
 
 export interface UpvoteTrackRequest {
@@ -153,12 +158,44 @@ export class PartyControllerApi extends runtime.BaseAPI {
 
     /**
      */
+    async getLockedTrackRaw(requestParameters: GetLockedTrackRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TrackDto>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getLockedTrack.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/api/v1/party/queue/{id}/tracks/locked`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => TrackDtoFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async getLockedTrack(requestParameters: GetLockedTrackRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TrackDto> {
+        const response = await this.getLockedTrackRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
     async getQueueRaw(requestParameters: GetQueueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<TrackDto>>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getQueue.');
         }
 
         const queryParameters: any = {};
+
+        if (requestParameters.withoutLocked !== undefined) {
+            queryParameters['withoutLocked'] = requestParameters.withoutLocked;
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
