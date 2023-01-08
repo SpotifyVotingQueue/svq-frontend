@@ -221,7 +221,7 @@ export default function Overview() {
 				</Transition>
 				<Playlists playlists={playlists} />
 				<ShortQueue partyId={queueInformation.queueId as string} />
-				<Recomendations recomendations={recomendations} />
+				<Recomendations partyId={queueInformation.queueId as string} />
 			</div>
 			<Player currentSong={currentSong} />
 		</>

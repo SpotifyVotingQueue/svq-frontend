@@ -54,14 +54,16 @@ export default function ShortQueue(props: ShortQueueProps) {
 			{queue && queue.length > 0 ? (
 				<div className="grow overflow-hidden flex justify-start space-x-4">
 					{queue.map((track) => (
-						<div className="flex flex-col h-36 w-36">
+						<div className="flex flex-col h-42 w-36">
 							<img
-								className="h-32 w-32 m-auto rounded-2xl"
+								className="min-h-32 min-w-32 mx-auto rounded-2xl"
 								src={track.coverUrl}
 								alt="Cover"
 							></img>
-							<p className="w-1/2 h-3 mx-auto mt-1.5 font-bold text-sm">
-								{track.name}
+							<p className="w-full h-5 mx-auto px-3 mt-0.5 font-bold text-sm text-center">
+								{track.name!.length > 19
+									? track.name?.slice(0, 18) + "..."
+									: track.name}
 							</p>
 						</div>
 					))}

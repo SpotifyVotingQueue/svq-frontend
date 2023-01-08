@@ -52,8 +52,8 @@ export default function Search(): JSX.Element {
 					></img>
 					<div className="grow flex flex-col space-y-2.5 justify-center">
 						<p className="w-full h-4 font-bold">
-							{result.name!.length > 30
-								? result.name?.slice(0, 28).concat("...")
+							{result.name!.length > 29
+								? result.name?.slice(0, 27).concat("...")
 								: result.name}
 						</p>
 						<p className="h-2 w-full rounded text-sm">

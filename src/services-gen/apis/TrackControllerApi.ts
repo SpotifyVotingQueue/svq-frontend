@@ -22,6 +22,10 @@ import {
     TrackDtoToJSON,
 } from '../models';
 
+export interface GetRecommendationsRequest {
+    partyId: string;
+}
+
 export interface GetTrackRequest {
     id: string;
 }
@@ -41,6 +45,40 @@ export interface SearchTracksRequest {
  * 
  */
 export class TrackControllerApi extends runtime.BaseAPI {
+
+    /**
+     * Get recommended songs
+     */
+    async getRecommendationsRaw(requestParameters: GetRecommendationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<TrackDto>>> {
+        if (requestParameters.partyId === null || requestParameters.partyId === undefined) {
+            throw new runtime.RequiredError('partyId','Required parameter requestParameters.partyId was null or undefined when calling getRecommendations.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.partyId !== undefined) {
+            queryParameters['partyId'] = requestParameters.partyId;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/api/v1/recommendations`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(TrackDtoFromJSON));
+    }
+
+    /**
+     * Get recommended songs
+     */
+    async getRecommendations(requestParameters: GetRecommendationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<TrackDto>> {
+        const response = await this.getRecommendationsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * Get information for a track

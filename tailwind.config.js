@@ -36,6 +36,7 @@ module.exports = {
 			height: {
 				"screen-50": "50vh",
 				0.45: "45%",
+				42: "10.5rem",
 			},
 			width: {
 				0.2: "20%",
@@ -48,9 +49,11 @@ module.exports = {
 				"screen-20": "20vh",
 				"screen-50": "50vh",
 				"screen-80": "80vh",
+				32: "8rem",
 			},
 			minWidth: {
 				screen: "100vw",
+				32: "8rem",
 			},
 		},
 	},
