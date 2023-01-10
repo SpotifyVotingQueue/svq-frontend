@@ -223,7 +223,7 @@ export default function Overview() {
 				<ShortQueue partyId={queueInformation.queueId as string} />
 				<Recomendations partyId={queueInformation.queueId as string} />
 			</div>
-			<Player currentSong={currentSong} />
+			{/* <Player currentSong={currentSong} /> */}
 		</>
 	);
 }

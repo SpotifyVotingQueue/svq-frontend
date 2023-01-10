@@ -22,6 +22,11 @@ import {
     PlaylistDtoToJSON,
 } from '../models';
 
+export interface AddPlaylistToQueueRequest {
+    id: string;
+    playlistId: string;
+}
+
 export interface GetPlaylistsRequest {
     partyId: string;
 }
@@ -30,6 +35,39 @@ export interface GetPlaylistsRequest {
  * 
  */
 export class PlaylistControllerApi extends runtime.BaseAPI {
+
+    /**
+     * Add all tracks of a playlist to the party
+     */
+    async addPlaylistToQueueRaw(requestParameters: AddPlaylistToQueueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling addPlaylistToQueue.');
+        }
+
+        if (requestParameters.playlistId === null || requestParameters.playlistId === undefined) {
+            throw new runtime.RequiredError('playlistId','Required parameter requestParameters.playlistId was null or undefined when calling addPlaylistToQueue.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/api/v1/queue/{id}/playlist/{playlistId}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"playlistId"}}`, encodeURIComponent(String(requestParameters.playlistId))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Add all tracks of a playlist to the party
+     */
+    async addPlaylistToQueue(requestParameters: AddPlaylistToQueueRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.addPlaylistToQueueRaw(requestParameters, initOverrides);
+    }
 
     /**
      * Get first four playlists of the host

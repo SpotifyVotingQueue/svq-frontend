@@ -50,6 +50,12 @@ export interface PlaylistDto {
      * @memberof PlaylistDto
      */
     cover?: Href;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlaylistDto
+     */
+    id?: string;
 }
 
 /**
@@ -75,6 +81,7 @@ export function PlaylistDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'owner': !exists(json, 'owner') ? undefined : json['owner'],
         'numberTracks': !exists(json, 'numberTracks') ? undefined : json['numberTracks'],
         'cover': !exists(json, 'cover') ? undefined : HrefFromJSON(json['cover']),
+        'id': !exists(json, 'id') ? undefined : json['id'],
     };
 }
 
@@ -91,6 +98,7 @@ export function PlaylistDtoToJSON(value?: PlaylistDto | null): any {
         'owner': value.owner,
         'numberTracks': value.numberTracks,
         'cover': HrefToJSON(value.cover),
+        'id': value.id,
     };
 }
 

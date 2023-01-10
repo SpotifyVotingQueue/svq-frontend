@@ -1,12 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { PlaylistDto } from "../../../services-gen";
 import { playlistSkeleton } from "../../../util/widgets/Skeletons";
+import {
+	APIContext,
+	APIContextIF,
+	QueueInformationContext,
+	QueueInformationIF,
+} from "../../../Providers";
 
 export interface PlaylistsProps {
 	playlists: PlaylistDto[] | undefined;
 }
 
 export default function Playlists(props: PlaylistsProps) {
+	const api: APIContextIF = useContext(APIContext);
+	const queueInformation: QueueInformationIF = useContext(
+		QueueInformationContext
+	);
+
 	const [rows, setRows] = useState(Array<JSX.Element>());
 
 	function splitReverse(str: string): string[] {
@@ -38,7 +49,14 @@ export default function Playlists(props: PlaylistsProps) {
 	}
 
 	function openPlaylist(playlist: PlaylistDto) {
-		// TODO: Open playlist
+		api.playlists
+			.addPlaylistToQueue({
+				id: queueInformation.queueId!,
+				playlistId: playlist.id!,
+			})
+			.then(() => {
+				//TODO do something
+			});
 	}
 
 	useEffect(() => {
