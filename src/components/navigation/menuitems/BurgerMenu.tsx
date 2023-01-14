@@ -62,7 +62,7 @@ export function BurgerMenu(): JSX.Element {
 	}, [session.token]);
 
 	return (
-		<Popover className="relative">
+		<Popover className="w-1/4">
 			<Popover>{MenuButton()}</Popover>
 			<Transition
 				as={Fragment}

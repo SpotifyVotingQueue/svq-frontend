@@ -50,7 +50,7 @@ export default function SearchBar() {
 	}
 
 	return (
-		<div className="relative w-1/2 my-auto">
+		<div className="w-1/3 my-auto">
 			<input
 				type="text"
 				className="bg-primary text-backgroundLight rounded-full h-8 pl-3 pr-2 pb-0.5"
