@@ -17,6 +17,10 @@ export default function Home(): JSX.Element {
         }
     }
 
+    function onJoin(): void {
+        navigate('/join');
+    }
+
     useEffect(() => {
         menu.setMiddle(undefined);
     }, []);
@@ -32,7 +36,7 @@ export default function Home(): JSX.Element {
                         Start
                     </button>
                     <br></br>
-                    <button style={{ display: 'block', marginTop: '30px', marginLeft: 'auto', marginRight: 'auto' }}>
+                    <button style={{ display: 'block', marginTop: '30px', marginLeft: 'auto', marginRight: 'auto' }} onClick={() => onJoin()}>
                         Beitreten
                     </button>
                 </div>
