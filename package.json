@@ -16,10 +16,13 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.0",
     "react-scripts": "5.0.1",
+    "sockjs-client": "^1.6.1",
+    "stompjs": "^2.3.3",
     "typescript": "^4.8.3",
     "usehooks-ts": "^2.9.1",
     "uuid": "^9.0.0",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "webstomp-client": "^1.2.6"
   },
   "scripts": {
     "start": "env-cmd -f ./.env react-scripts start",
@@ -49,6 +52,7 @@
     ]
   },
   "devDependencies": {
+    "@types/sockjs-client": "^1.5.1",
     "@types/uuid": "^8.3.4",
     "autoprefixer": "^10.4.12",
     "env-cmd": "^10.1.0",

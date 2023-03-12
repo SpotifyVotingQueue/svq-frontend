@@ -4,6 +4,8 @@ import { queueShortSkeleton } from "../../../util/widgets/Skeletons";
 import { APIContext, APIContextIF } from "../../../Providers";
 import { TrackDto } from "../../../services-gen";
 import { useInterval } from "usehooks-ts";
+import SockJS from "sockjs-client";
+import Stomp from "webstomp-client";
 
 export interface ShortQueueProps {
 	partyId: string;
@@ -20,18 +22,35 @@ export default function ShortQueue(props: ShortQueueProps) {
 		null as number | null
 	);
 
-	useInterval(() => {
-		async function getQueue() {
-			let queue: TrackDto[] = await api.party.getQueue({
-				id: props.partyId,
-			});
-			setQueue(queue);
-		}
-		getQueue();
-	}, refreshInterval);
+	// useInterval(() => {
+	// 	async function getQueue() {
+	// 		let queue: TrackDto[] = await api.party.getQueue({
+	// 			id: props.partyId,
+	// 		});
+	// 		setQueue(queue);
+	// 	}
+	// 	getQueue();
+	// }, refreshInterval);
 
+	// useEffect(() => {
+	// 	setRefreshInterval(1000);
+	// }, [props.partyId]);
 	useEffect(() => {
-		setRefreshInterval(1000);
+		let sock = new SockJS(
+			process.env.REACT_APP_BACKEND_BASE_URL + "/gs-guide-websocket"
+		);
+		let client = Stomp.over(sock);
+		client.connect({}, function (frame) {
+			client.subscribe("/sockets/state", (state) => {
+				async function getQueue() {
+					let queue: TrackDto[] = await api.party.getQueue({
+						id: props.partyId,
+					});
+					setQueue(queue);
+				}
+				getQueue();
+			});
+		});
 	}, [props.partyId]);
 
 	function nav2Vote(): void {
